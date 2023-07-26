@@ -12,7 +12,33 @@ const resolvers = {
     },
     teams: async () => {
       return await Team.find({});
-    }
+    },
+  },
+
+  Mutation: {
+    addUser: async (parent, { username, email }) => {
+      return await User.create({ username, email });
+    },
+    addTournament: async (parent, { name, location }) => {
+      return await Tournament.create({ name, location });
+    },
+    addTeam: async (parent, { name, members }) => {
+      return await Team.create({ name, members });
+    },
+    addMemberToTeam: async (parent, { teamId, userId }) => {
+      const team = await Team.findById(teamId);
+      const user = await User.findById(userId);
+
+      if (!team || !user) {
+        throw new Error('Invalid team or user ID');
+      }
+
+      team.members.push(user._id);
+
+      await team.save();
+
+      return team;
+    },
   }
 };
 
