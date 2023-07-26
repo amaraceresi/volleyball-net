@@ -1,0 +1,22 @@
+1. on initial site load, user is asked to login or sign up || possibly keeps user from accessing site if account is not created
+2. displays calender of joinable future games/tournaments
+3. after clicking date/game/tourney pay sign up fee to play in tourney
+
+EXTRAS
+
+1. users will have a dashboard where they can see current games/tourneys that they have paid and signed up to play in
+2. assign random players and coaches to teams / see current teams playing in each game/tourney
+
+DO THE BACKEND FIRST (DATABASE MODELS / SCHEMAS RESOLVERS)
+AFTER SETTING UP BACKEND THEN DO THE FRONT END SO THAT YOU ARE ABLE TO LINK UP BACKEND 
+FUNCTIONALITY TO A FRONT END EASIER BY HAVING AN IDEA OF WHAT IS NEEDED AND WHAT IS NOT
+
+
+Here's a brief overview of what each page will do:
+
+HomePage: This is the landing page where users are greeted and provided with options to either log in or sign up.
+LoginPage: This page will have a form to let users log in using their credentials.
+SignupPage: This page will have a form to let new users sign up by providing necessary information.
+DashboardPage: After logging in, users can see their personal dashboard where they can view the tournaments they have signed up for and other relevant information.
+TournamentListPage: This page lists all upcoming tournaments. Users can click on any tournament to view more details and sign up for it.
+TournamentDetailsPage: This page shows the details of a selected tournament. If the user is logged in, they can register for the tournament. If the teams are already generated, they can view the teams and other details related to the tournament.
