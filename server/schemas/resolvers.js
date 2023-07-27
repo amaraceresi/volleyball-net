@@ -16,8 +16,8 @@ const resolvers = {
   },
 
   Mutation: {
-    addUser: async (parent, { username, email }) => {
-      return await User.create({ username, email });
+    addUser: async (parent, { username, email, password }) => {  
+      return await User.create({ username, email, password });  
     },
     addTournament: async (parent, { name, location }) => {
       return await Tournament.create({ name, location });
