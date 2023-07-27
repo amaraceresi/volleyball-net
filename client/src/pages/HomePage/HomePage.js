@@ -1,8 +1,7 @@
-// src/pages/Home.js
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Home = () => {
+const HomePage = () => {
   return (
     <div>
       <h1>Welcome to Our Volleyball Website!</h1>
@@ -16,4 +15,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;
