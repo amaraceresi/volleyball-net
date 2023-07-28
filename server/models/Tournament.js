@@ -1,12 +1,14 @@
-const mongoose = require('mongoose');
-
-const Schema = mongoose.Schema;
+const { Schema, model } = require('mongoose');
 
 const TournamentSchema = new Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
+    trim: true,
+  },
+  location: {
+    type: String,
+    trim: true,
   },
   date: {
     type: Date,
@@ -14,10 +16,10 @@ const TournamentSchema = new Schema({
   },
   teams: [{
     type: Schema.Types.ObjectId,
-    ref: 'Team'
+    ref: 'Team',
   }],
 });
 
-const Tournament = mongoose.model('Tournament', TournamentSchema);
+const Tournament = model('Tournament', TournamentSchema);
 
 module.exports = Tournament;
