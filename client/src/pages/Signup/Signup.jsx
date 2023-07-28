@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
+import { ADD_USER } from "../../graphql/mutations";
+import { useSelector } from "react-redux";
+import { getUser } from "../../redux/slices/userSlice";
 import { Navigate } from "react-router-dom";
+
+import Page from "../../components/Page";
+import AuthService from "../../utils/auth";
 
 const styles = {
   form: {
