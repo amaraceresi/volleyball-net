@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { getUser } from "../redux/slices/userSlice";
 
 import Header from "./Header";
-import Footer from "./Footer";
+import Footer from "./Footer/Footer";
 
 const styles = {
   container: {
