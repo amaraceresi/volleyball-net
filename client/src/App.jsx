@@ -13,6 +13,7 @@ import TournamentDetails from "./pages/TournamentDetails/TournamentDetails";
 import TournamentList from "./pages/TournamentList/TournamentList";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
+import { HelmetProvider } from 'react-helmet-async'
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:3002/graphql',
@@ -36,19 +37,21 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Provider store={store}>
-        <Router>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/tournaments" element={<TournamentList />} />
-            <Route path="/tournament/:id" element={<TournamentDetails />} />
-          </Routes>
-        </Router>
-      </Provider>
+      <HelmetProvider>
+        <Provider store={store}>
+          <Router>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/tournaments" element={<TournamentList />} />
+              <Route path="/tournament/:id" element={<TournamentDetails />} />
+            </Routes>
+          </Router>
+        </Provider>
+      </HelmetProvider>
     </ApolloProvider>
   );
 }

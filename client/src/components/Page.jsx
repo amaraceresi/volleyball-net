@@ -34,15 +34,16 @@ export default function Page({
 }) {
   const { isAuthenticated } = useSelector(getUser());
 
+  
   return (
     <>
       <Helmet>{headContent}</Helmet>
-      <Header />
+      {/* <Header /> */}
       <div style={styles.container}>
         <main style={styles.main}>
           {isProtected && !isAuthenticated ? <div>Unauthorized</div> : children}
         </main>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </>
   );
