@@ -1,4 +1,4 @@
-import AuthService from "../utils/auth";
+import AuthService from "../graphql/auth";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
