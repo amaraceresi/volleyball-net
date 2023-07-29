@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
 
 const userSchema = new Schema(
   {
@@ -35,15 +36,31 @@ const userSchema = new Schema(
     toJSON: {
       getters: true,
       virtuals: true,
+      transform: function (doc, ret) {
+        delete ret.password;
+      }
     },
   }
 );
+
+userSchema.methods.generateJWT = function() {
+  const today = new Date();
+  const expirationDate = new Date(today);
+  expirationDate.setDate(today.getDate() + 60);
+
+  return jwt.sign({
+    email: this.email,
+    id: this._id,
+    exp: parseInt(expirationDate.getTime() / 1000, 10),
+  }, 'my-secret-8595');
+}
 
 userSchema.pre("save", async function (next) {
   if (this.isNew || this.isModified("password")) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
+
   next();
 });
 

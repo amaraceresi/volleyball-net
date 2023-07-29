@@ -30,7 +30,6 @@ const headContent = (
 );
 
 export default function SignUp() {
-
   
   const [addUser, { error, data, loading }] = useMutation(ADD_USER);
   const { isAuthenticated } = useSelector(getUser());
@@ -65,15 +64,14 @@ export default function SignUp() {
     }
   };
   
-  // if (isAuthenticated) {
-  //   return <Navigate to={"/dashboard"} />;
-  // }
+  if (isAuthenticated) {
+    return <Navigate to={"/dashboard"} />;
+  }
   
-  // return <div>hello</div>
   return (
     <Page isProtected={false} headContent={headContent}>
-      {/* <div>Sign Up</div> */}
-      {/* <form style={styles.form} onSubmit={handleFormSubmit}>
+      <div>Sign Up</div>
+      <form style={styles.form} onSubmit={handleFormSubmit}>
         <input
           placeholder="First Name"
           name="firstName"
@@ -111,8 +109,8 @@ export default function SignUp() {
             Submit
           </button>
         )}
-      </form> */}
-      {/* {error && <h3>{error.message}</h3>} */}
+      </form>
+      {error && <h3>{error.message}</h3>}
     </Page>
   );
 }

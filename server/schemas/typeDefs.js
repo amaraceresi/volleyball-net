@@ -1,6 +1,8 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+  scalar Date
+
   type User {
     _id: ID
     team: [Team]
@@ -9,12 +11,18 @@ const typeDefs = gql`
     email: String
   }
 
+  type AuthUser {
+    token: String
+    user: User
+  }
+
   type Tournament {
     _id: ID
     name: String
     location: String
     start: Date
     end: Date
+    ageDivisions: [AgeDivision]
   }
 
   type Team {
@@ -38,15 +46,16 @@ const typeDefs = gql`
     users: [User]
     tournaments: [Tournament]
     teams: [Team]
-    ageDivision: [AgeDivision]
+    ageDivisions: [AgeDivision]
   }
 
   type Mutation {
-    addUser(firstName: String!, lastName: String!, email: String!, password: String!): User
+    addUser(firstName: String!, lastName: String!, email: String!, password: String!): AuthUser
     addTournament(name: String!, location: String!): Tournament
     addTeam(name: String!, members: [ID]!): Team
     addMemberToTeam(teamId: ID!, userId: ID!): Team
-    addAgeDivision(name: String!, age: String!, start: Date!, teamCap: Int!, teams: [Team]!): AgeDivision
+    addAgeDivision(age: String!, start: Date!, teamCap: Int!, date: Date!, teams: [ID]!): AgeDivision
+    addAgeDivisionToTournament(ageDivisionId: ID!, tournamentId: ID!): Tournament
   }
 `;
 
