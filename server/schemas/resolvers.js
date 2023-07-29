@@ -1,9 +1,27 @@
+const { GraphQLScalarType, Kind } = require('graphql');
 const User = require('../models/User');
 const Tournament = require('../models/Tournament');
 const Team = require('../models/Team');
 const AgeDivision = require('../models/AgeDivison');
 
 const resolvers = {
+  Date: new GraphQLScalarType({
+    name: 'Date',
+    description: 'Date custom scalar type',
+    parseValue(value) {
+      return new Date(value);
+    },
+    serialize(value) {
+      return value.getTime();
+    },
+    parseLiteral(ast) {
+      if (ast.kind === Kind.INT) {
+        return new Date(ast.value);
+      }
+      return null;
+    },
+  }),
+
   Query: {
     users: async () => {
       return await User.find({});
@@ -21,7 +39,9 @@ const resolvers = {
 
   Mutation: {
     addUser: async (parent, { firstName, lastName, email, password }) => {  
-      return await User.create({ firstName, lastName, email, password });  
+      const user = await User.create({ firstName, lastName, email, password });
+      const token = createToken(user);
+      return { token, user };  
     },
     addTournament: async (parent, { name, location }) => {
       return await Tournament.create({ name, location });
