@@ -4,7 +4,7 @@ import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Provider } from 'react-redux';
 import { store } from "./redux/store";
-
+import Auth from './components/Auth'
 import Dashboard from "./pages/Dashboard/Dashboard";
 import HomePage from "./pages/HomePage/HomePage";
 import Login from "./pages/Login/Login";
@@ -39,17 +39,19 @@ function App() {
     <ApolloProvider client={client}>
       <HelmetProvider>
         <Provider store={store}>
-          <Router>
-            <Navbar />
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/tournaments" element={<TournamentList />} />
-              <Route path="/tournament/:id" element={<TournamentDetails />} />
-            </Routes>
-          </Router>
+          <Auth>
+            <Router>
+              <Navbar />
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/tournaments" element={<TournamentList />} />
+                <Route path="/tournament/:id" element={<TournamentDetails />} />
+              </Routes>
+            </Router>
+          </Auth>
         </Provider>
       </HelmetProvider>
     </ApolloProvider>

@@ -3,6 +3,7 @@ const User = require('../models/User');
 const Tournament = require('../models/Tournament');
 const Team = require('../models/Team');
 const AgeDivision = require('../models/AgeDivison');
+const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Date: new GraphQLScalarType({
@@ -40,7 +41,7 @@ const resolvers = {
   Mutation: {
     addUser: async (parent, { firstName, lastName, email, password }) => {  
       const user = await User.create({ firstName, lastName, email, password });
-      const token = createToken(user);
+      const token = signToken(user);
       return { token, user };  
     },
     addTournament: async (parent, { name, location }) => {
