@@ -1,18 +1,29 @@
 const express = require('express');
 const path = require('path');
 const { ApolloServer } = require('apollo-server-express');
+const jwt = require('jsonwebtoken');
 require('dotenv').config();
-// Import the two parts of a GraphQL schema
 const { typeDefs, resolvers } = require('./schemas');
-const { authMiddleware } = require('./utils/auth');
+const User = require('./models/User');
 
 const db = require('./config/connection');
 
 const PORT = process.env.PORT || 3002;
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: authMiddleware
+  context: ({ req }) => {
+    const token = req.headers.authorization || '';
+    const currentUser = jwt.verify(token, process.env.JWT_SECRET || 'my-secret-8595', (err, decoded) => {
+      if (err) {
+        return null;
+      }
+      
+      return User.findById(decoded.id);
+    });
+    return { currentUser };
+  },
 });
 
 const app = express();
@@ -28,10 +39,11 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/'));
 })
 
-// Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {
   await server.start();
   server.applyMiddleware({ app });
+
+  db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
   db.once('open', () => {
     app.listen(PORT, () => {
@@ -41,5 +53,4 @@ const startApolloServer = async () => {
   })
 };
 
-// Call the async function to start the server
 startApolloServer();
