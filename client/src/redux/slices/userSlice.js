@@ -27,11 +27,22 @@ export const userSlice = createSlice({
       state.userData = userObj;
       state.isAuthenticated = true;
     },
+    logOut: (state) => {
+      state.userData = {
+        id: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        createdAt: '',
+        updatedAt: ''
+      };
+      state.isAuthenticated = false;
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setAuthenticatedUser } = userSlice.actions
+export const { setAuthenticatedUser, logOut } = userSlice.actions
 
 export const getUser = () => (state) =>
   state?.[userSlice.name];

@@ -44,6 +44,21 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };  
     },
+    loginUser: async (parent, { email, password }) => {  
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      const isValid = await user.isCorrectPassword(password);
+      if (!isValid) {
+        throw new Error('Invalid password');
+      }
+
+      const token = signToken(user);
+      return { token, user };  
+    },
     addTournament: async (parent, { name, location }) => {
       return await Tournament.create({ name, location });
     },
