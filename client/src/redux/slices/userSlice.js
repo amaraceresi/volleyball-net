@@ -6,6 +6,7 @@ const initialState = {
     firstName: '',
     lastName: '',
     email: '',
+    role: '',   
     createdAt: '',
     updatedAt: ''
   },
@@ -33,6 +34,7 @@ export const userSlice = createSlice({
         firstName: '',
         lastName: '',
         email: '',
+        role: '',  
         createdAt: '',
         updatedAt: ''
       };
@@ -41,7 +43,6 @@ export const userSlice = createSlice({
   },
 })
 
-// Action creators are generated for each case reducer function
 export const { setAuthenticatedUser, logOut } = userSlice.actions
 
 export const getUser = () => (state) =>

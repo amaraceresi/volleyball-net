@@ -1,3 +1,5 @@
+import { useSelector } from 'react-redux';
+import { getUser } from '../../redux/slices/userSlice';
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -18,6 +20,9 @@ const events = [
 ];
 
 export default function Calendar() {
+  const { userData } = useSelector(getUser());
+  const { role } = userData;
+
   const handleEventClick = (obj) => {
     const { event } = obj;
     console.log("Event Selected");
@@ -33,12 +38,12 @@ export default function Calendar() {
       droppable={true}
       select={(info) => {
         console.log("date selected");
-        if (user === 'Admin') {
-
+        if (role === 'Admin') {
+          // Do something if the user is an admin
         }
         else {
-            // Display age groups and have them selectable
-            // Register team from age group
+          // Display age groups and have them selectable
+          // Register team from age group
         }
         console.log(info);
       }}

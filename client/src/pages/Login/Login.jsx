@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../graphql/mutations";
-import { useSelector } from "react-redux";
-import { getUser } from "../../redux/slices/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuthenticatedUser, getUser } from "../../redux/slices/userSlice";
 import { Navigate } from "react-router-dom";
 
 import Page from "../../components/Page";
@@ -21,14 +21,15 @@ const styles = {
 
 const headContent = (
   <>
-    <title>Change Me! - Login</title>
-    <meta name="description" content="Login for Project-3 Starter Code." />
+    <title>Login</title>
+    <meta name="description" content="Login" />
   </>
 );
 
 export default function Login() {
   const [loginUser, { error, data, loading }] = useMutation(LOGIN_USER);
   const { isAuthenticated } = useSelector(getUser());
+  const dispatch = useDispatch();
 
   const [formState, setFormState] = useState({
     email: "",
@@ -53,6 +54,8 @@ export default function Login() {
       });
 
       AuthService.login(data.loginUser.token);
+      
+      dispatch(setAuthenticatedUser({data: data.loginUser}));
     } catch (e) {
       console.error(e);
     }

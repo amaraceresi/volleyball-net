@@ -10,7 +10,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import TournamentDetails from "./pages/TournamentDetails/TournamentDetails";
-import TournamentList from "./pages/TournamentList/TournamentList";
+import Tournaments from "./pages/Tournaments/Tournaments";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import { HelmetProvider } from 'react-helmet-async'
@@ -47,7 +47,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/tournaments" element={<TournamentList />} />
+                <Route path="/tournaments" element={<Tournaments />} />
                 <Route path="/tournament/:id" element={<TournamentDetails />} />
               </Routes>
             </Router>
