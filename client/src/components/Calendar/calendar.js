@@ -3,9 +3,11 @@ import { getUser } from '../../redux/slices/userSlice';
 import FullCalendar, { EventContentArg } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import React from 'react';
+import React, {useContext} from 'react';
 import { Link } from 'react-router-dom';
 import Select from 'react-dropdown-select';
+
+// import { AppContext } from "../../App"
 
 const events = [
   {
@@ -32,18 +34,25 @@ export default function Calendar() {
   const { userData } = useSelector(getUser());
   const { role } = userData;
 
+  // const {
+  //  test, setTest
+  // } = useContext(AppContext)
+
   const handleEventClick = ({ event }) => {
     console.log("Event Selected");
-    console.log(event);
+    console.log(event.id);
+
   };
 
   const EventContent = ({ event }: EventContentArg) => (
     <div>
       <b>{event.title}</b>
       <Select
+  
         options={options}
         onChange={(selected) => {
           window.location.href = `/register/${event.id}/${selected[0].value}`;
+          // setTest(event.id)
         }}
       />
     </div>
