@@ -25,8 +25,8 @@ function Navbar() {
             <Link to="/tournaments" className="navbar-item">
               Tournaments
             </Link>
-            <Link to="/tournamentdetails" className="navbar-item">
-              Tournament Details
+            <Link to="/register" className="navbar-item">
+              Register
             </Link>
             <Link to="/dashboard" className="navbar-item">
               Dashboard
