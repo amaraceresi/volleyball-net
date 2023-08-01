@@ -7,8 +7,6 @@ import React, {useContext} from 'react';
 import { Link } from 'react-router-dom';
 import Select from 'react-dropdown-select';
 
-// import { AppContext } from "../../App"
-
 const events = [
   {
     id: 1,
@@ -34,17 +32,13 @@ export default function Calendar() {
   const { userData } = useSelector(getUser());
   const { role } = userData;
 
-  // const {
-  //  test, setTest
-  // } = useContext(AppContext)
-
   const handleEventClick = ({ event }) => {
     console.log("Event Selected");
     console.log(event.id);
 
   };
 
-  const EventContent = ({ event }: EventContentArg) => (
+  const EventContent = ({ event }) => (
     <div>
       <b>{event.title}</b>
       <Select
@@ -52,7 +46,6 @@ export default function Calendar() {
         options={options}
         onChange={(selected) => {
           window.location.href = `/register/${event.id}/${selected[0].value}`;
-          // setTest(event.id)
         }}
       />
     </div>

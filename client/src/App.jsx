@@ -54,7 +54,7 @@ function App() {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/tournaments" element={<Tournaments />} />
-                <Route path="/register/:eventId/:valueId" element={<Register />} />
+                <Route path="/register/:tournamentId/:agedDivisionId" element={<Register />} />
               </Routes>
             </Router>
           </Auth>
