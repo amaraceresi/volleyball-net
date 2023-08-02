@@ -9,6 +9,7 @@ const typeDefs = gql`
     firstName: String
     lastName: String
     email: String
+    tournaments: [Tournament]
     createdAt: Date
     updatedAt: Date
   }
@@ -50,6 +51,7 @@ const typeDefs = gql`
     teams: [Team]
     ageDivisions: [AgeDivision]
     me: User
+    userTournaments: [Tournament]
   }
 
   type Mutation {

@@ -4,6 +4,7 @@ const Tournament = require('../models/Tournament');
 const Team = require('../models/Team');
 const AgeDivision = require('../models/AgeDivison');
 const { signToken } = require('../utils/auth');
+const { AuthenticationError } = require('apollo-server-express');
 
 const resolvers = {
   Date: new GraphQLScalarType({
@@ -35,7 +36,15 @@ const resolvers = {
     },
     ageDivisions: async () => {
       return await AgeDivision.find({});
-    }
+    },
+    userTournaments: async (parent, args, context) => {
+      if (context.user) {
+        const userData = await User.findOne({ _id: context.user._id })
+          .populate('tournaments');
+        return userData.tournaments;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
   },
 
   Mutation: {
@@ -69,14 +78,14 @@ const resolvers = {
       return await AgeDivision.create({ age, start, teamCap, date, teams });
     },
     addAgeDivisionToTournament: async (parent, { ageDivisionId, tournamentId }) => {
-      const tournament = await Team.findById(tournamentId);
+      const tournament = await Tournament.findById(tournamentId);
       const ageDivision = await AgeDivision.findById(ageDivisionId);
 
       if (!tournament || !ageDivision) {
         throw new Error('Invalid tournament or age division ID');
       }
 
-      tournament.ageDivision.push(ageDivision._id);
+      tournament.ageDivisions.push(ageDivision._id);
 
       await tournament.save();
 

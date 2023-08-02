@@ -7,7 +7,7 @@ function Register() {
 
   const [teamData, setTeamData] = useState({
     teamName: '',
-    teamMembers: [{name: ''}, {name: ''}], 
+    teamMembers: [{name: ''}, {name: ''}],
     email: '',
   });
 
@@ -23,7 +23,7 @@ function Register() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    navigate('/payment', { state: { teamData } });  
+    navigate('/success');
   };
 
   return (
@@ -53,7 +53,8 @@ function Register() {
           <label htmlFor="email">Email:</label>
           <input type="email" name="email" id="email" value={teamData.email} onChange={(e) => setTeamData({...teamData, email: e.target.value})} required />
         </div>
-        <button type="submit">Proceed to Payment</button>
+        <button onClick={() => navigate('/payment')}>Proceed to Payment</button>
+        <button type="submit">Register</button>
       </form>
     </div>
   );

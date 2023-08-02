@@ -1,7 +1,7 @@
-import React, {createContext, useState} from 'react';
+import React from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { BrowserRouter as Router, Routes, Route, useParams } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Provider } from 'react-redux';
 import { store } from "./redux/store";
 import Auth from './components/Auth'
@@ -13,13 +13,10 @@ import Tournaments from "./pages/Tournaments/Tournaments";
 import Payment from "./pages/Payment/Payment"
 import Register from "./pages/Register/Register"
 import Navbar from "./components/Navbar/Navbar";
-import Footer from "./components/Footer/Footer";
 import { HelmetProvider } from 'react-helmet-async'
 
-// export const AppContext = createContext()
-
 const httpLink = createHttpLink({
-  uri: 'http://localhost:3002/graphql',
+  uri: "/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -32,19 +29,15 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 
 function App() {
-  // const [test, setTest] = useState()
-  
   return (
     <ApolloProvider client={client}>
       <HelmetProvider>
-        {/* <AppContext.Provider value={{test, setTest}}> */}
         <Provider store={store}>
           <Auth>
             <Router>
@@ -57,12 +50,10 @@ function App() {
                 <Route path="/tournaments" element={<Tournaments />} />
                 <Route path="/register/:tournamentId/:agedDivisionId" element={<Register />} />
                 <Route path="/payment" element={<Payment />} />
-
               </Routes>
             </Router>
           </Auth>
         </Provider>
-        {/* </AppContext.Provider> */}
       </HelmetProvider>
     </ApolloProvider>
   );
