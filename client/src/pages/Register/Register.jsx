@@ -7,7 +7,7 @@ function Register() {
 
   const [teamData, setTeamData] = useState({
     teamName: '',
-    teamMembers: [{name: ''}], // Initially an empty team member
+    teamMembers: [{name: ''}, {name: ''}], 
     email: '',
   });
 
@@ -21,25 +21,9 @@ function Register() {
     });
   };
 
-  const handleRemoveClick = (index) => {
-    const list = [...teamData.teamMembers];
-    list.splice(index, 1);
-    setTeamData({
-      ...teamData,
-      teamMembers: list,
-    });
-  };
-
-  const handleAddClick = () => {
-    setTeamData({
-      ...teamData,
-      teamMembers: [...teamData.teamMembers, {name: ''}],
-    });
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    navigate('/success');
+    navigate('/payment', { state: { teamData } });  
   };
 
   return (
@@ -62,8 +46,6 @@ function Register() {
                 value={x.name}
                 onChange={e => handleInputChange(e, i)}
               />
-              {teamData.teamMembers.length !== 1 && <button onClick={() => handleRemoveClick(i)}>Remove</button>}
-              {teamData.teamMembers.length - 1 === i && <button onClick={handleAddClick}>Add</button>}
             </div>
           );
         })}
@@ -71,7 +53,7 @@ function Register() {
           <label htmlFor="email">Email:</label>
           <input type="email" name="email" id="email" value={teamData.email} onChange={(e) => setTeamData({...teamData, email: e.target.value})} required />
         </div>
-        <button type="submit">Register</button>
+        <button type="submit">Proceed to Payment</button>
       </form>
     </div>
   );

@@ -10,6 +10,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import Tournaments from "./pages/Tournaments/Tournaments";
+import Payment from "./pages/Payment/Payment"
 import Register from "./pages/Register/Register"
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
@@ -55,6 +56,8 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/tournaments" element={<Tournaments />} />
                 <Route path="/register/:tournamentId/:agedDivisionId" element={<Register />} />
+                <Route path="/payment" element={<Payment />} />
+
               </Routes>
             </Router>
           </Auth>
