@@ -1,24 +1,24 @@
 import { useSelector } from 'react-redux';
 import { getUser } from '../../redux/slices/userSlice';
-import FullCalendar, { EventContentArg } from "@fullcalendar/react";
+import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import React, {useContext} from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import Select from 'react-dropdown-select';
 
 const events = [
   {
     id: 1,
     title: "Test Event 1",
-    start: "2023-07-15",
-    end: "2023-07-15",
+    start: "2023-08-05",
+    end: "2023-08-05",
   },
   {
     id: 2,
     title: "Test Event 2",
-    start: "2023-07-23",
-    end: "2023-07-23",
+    start: "2023-08-08",
+    end: "2023-08-08",
   },
 ];
 
@@ -31,6 +31,7 @@ const options = [
 export default function Calendar() {
   const { userData } = useSelector(getUser());
   const { role } = userData;
+  const navigate = useNavigate();
 
   const handleEventClick = ({ event }) => {
     console.log("Event Selected");
@@ -42,10 +43,9 @@ export default function Calendar() {
     <div>
       <b>{event.title}</b>
       <Select
-  
         options={options}
         onChange={(selected) => {
-          window.location.href = `/register/${event.id}/${selected[0].value}`;
+          navigate(`/register/${event.id}/${selected[0].value}`);
         }}
       />
     </div>

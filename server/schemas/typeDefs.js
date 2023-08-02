@@ -49,6 +49,7 @@ const typeDefs = gql`
     tournaments: [Tournament]
     teams: [Team]
     ageDivisions: [AgeDivision]
+    me: User
   }
 
   type Mutation {
