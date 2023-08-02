@@ -21,6 +21,14 @@
     "concurrently": "^5.1.0"
   },
   "dependencies": {
-    "graphql": "^15.8.0"
+    "@apollo/client": "^3.7.14",
+    "@apollo/server": "^4.7.1",
+    "@stripe/stripe-js": "^1.53.0",
+    "apollo-server-express": "^3.6.2",
+    "dotenv": "^16.0.3",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.1.8",
+    "stripe": "^12.6.0"
   }
 }
