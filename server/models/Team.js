@@ -11,8 +11,8 @@ const TeamSchema = new Schema({
     trim: true,
   },
   players: [{
-    type: Schema.Types.ObjectId,
-    ref: 'User',
+    type: String,
+    trim: true,
   }],
   tournaments: [{
     type: Schema.Types.ObjectId,

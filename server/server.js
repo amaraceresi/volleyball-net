@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const { typeDefs, resolvers } = require('./schemas');
 const User = require('./models/User');
+const auth = require('./utils/auth')
 
 const db = require('./config/connection');
 
@@ -13,17 +14,7 @@ const PORT = process.env.PORT || 3002;
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({ req }) => {
-    const token = req.headers.authorization || '';
-    const currentUser = jwt.verify(token, process.env.JWT_SECRET || 'my-secret-8595', (err, decoded) => {
-      if (err) {
-        return null;
-      }
-      
-      return User.findById(decoded.id);
-    });
-    return { currentUser };
-  },
+  context: auth.authMiddleware
 });
 
 const app = express();

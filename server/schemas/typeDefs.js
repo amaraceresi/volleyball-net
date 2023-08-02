@@ -45,6 +45,11 @@ const typeDefs = gql`
     teams: [Team]
   }
 
+  input TeamInput {
+    name: String!
+    members: [ID!]!
+  }
+
   type Query {
     users: [User]
     tournaments: [Tournament]
@@ -62,6 +67,7 @@ const typeDefs = gql`
     addMemberToTeam(teamId: ID!, userId: ID!): Team
     addAgeDivision(age: String!, start: Date!, teamCap: Int!, date: Date!, teams: [ID]!): AgeDivision
     addAgeDivisionToTournament(ageDivisionId: ID!, tournamentId: ID!): Tournament
+    registerForTournament(userId: ID!, tournamentId: ID!, teamData: TeamInput!): [Tournament]
   }
 `;
 

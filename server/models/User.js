@@ -31,6 +31,10 @@ const userSchema = new Schema(
       type: Date,
       default: Date.now,
     },
+    tournaments: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Tournament'
+    }]
   },
   {
     toJSON: {

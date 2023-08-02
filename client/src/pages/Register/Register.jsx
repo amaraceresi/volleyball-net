@@ -23,7 +23,15 @@ function Register() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    navigate('/success');
+
+    try {
+      // make api call
+      navigate('/dashboard');
+    } catch(err) {
+      console.log(err)
+    }
+
+
   };
 
   return (

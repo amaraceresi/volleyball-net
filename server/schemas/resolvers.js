@@ -1,30 +1,23 @@
-const { GraphQLScalarType, Kind } = require('graphql');
 const User = require('../models/User');
 const Tournament = require('../models/Tournament');
 const Team = require('../models/Team');
 const AgeDivision = require('../models/AgeDivison');
 const { signToken } = require('../utils/auth');
 const { AuthenticationError } = require('apollo-server-express');
+const { dateScalar } = require('./scalar');
 
 const resolvers = {
-  Date: new GraphQLScalarType({
-    name: 'Date',
-    description: 'Date custom scalar type',
-    parseValue(value) {
-      return new Date(value);
-    },
-    serialize(value) {
-      return value.getTime();
-    },
-    parseLiteral(ast) {
-      if (ast.kind === Kind.INT) {
-        return new Date(ast.value);
-      }
-      return null;
-    },
-  }),
+  Date: dateScalar,
 
   Query: {
+    me: async (parent, args, context) => {
+      
+      if (context.user) {
+        const userData = await User.findOne({ _id: context.user._id });
+        return userData;
+      }
+      throw new AuthenticationError('User is not authenticated');
+    },
     users: async () => {
       return await User.find({});
     },
@@ -43,7 +36,7 @@ const resolvers = {
           .populate('tournaments');
         return userData.tournaments;
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError('User is not authenticated');
     },
   },
 
@@ -105,7 +98,27 @@ const resolvers = {
 
       return team;
     },
-  }
+    registerForTournament: async (parent, { userId, tournamentId, teamData }, context) => {
+      // Ensure user is logged in
+      if (!context.user) {
+        throw new AuthenticationError('User is not authenticated. You need to be logged in!');
+      }
+
+      // Create the team
+      const newTeam = await Team.create(teamData);
+
+      // Add the team to the user's teams
+      await User.findByIdAndUpdate(userId, { $push: { teams: newTeam._id } });
+
+      // Add the team to the tournament's teams
+      await Tournament.findByIdAndUpdate(tournamentId, { $push: { teams: newTeam._id } });
+
+      // Find user with updated tournaments
+      const userData = await User.findOne({ _id: userId }).populate('tournaments');
+
+      return userData.tournaments;
+    },
+  },
 };
 
 module.exports = resolvers;

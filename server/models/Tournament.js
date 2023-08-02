@@ -18,6 +18,10 @@ const TournamentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Team',
   }],
+  users: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  }],
 });
 
 const Tournament = model('Tournament', TournamentSchema);
