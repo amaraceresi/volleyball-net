@@ -22,6 +22,10 @@ const TournamentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   }],
+  ageDivisions: [{
+    type: Schema.Types.ObjectId,
+    ref: 'AgeDivision',
+  }],
 });
 
 const Tournament = model('Tournament', TournamentSchema);

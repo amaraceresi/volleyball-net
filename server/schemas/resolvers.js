@@ -11,7 +11,6 @@ const resolvers = {
 
   Query: {
     me: async (parent, args, context) => {
-      
       if (context.user) {
         const userData = await User.findOne({ _id: context.user._id });
         return userData;
@@ -105,7 +104,6 @@ const resolvers = {
       return team;
     },
     registerForTournament: async (parent, { ageDivisionId, tournamentId, teamData }, context) => {
-      // Ensure user is logged in
       if (!context.user) {
         throw new AuthenticationError('User is not authenticated. You need to be logged in!');
       }
@@ -117,22 +115,18 @@ const resolvers = {
         adminMember: userId
       }
       
-      const { teamCap, teams } = await AgeDivision.findById(ageDivisionId)
-      
-      if(teams.length >= teamCap) {
-        throw UserInputError;
+      const ageDivision = await AgeDivision.findById(ageDivisionId);
+
+      if (ageDivision.teams.length >= ageDivision.teamCap) {
+        throw new UserInputError("The maximum number of teams for this age division has been reached.");
       }
 
-      // Create the team
       const newTeam = await Team.create(team);
 
-      // Add the team to the user's teams
       await User.findByIdAndUpdate(userId, { $push: { teams: newTeam._id, tournaments: tournamentId } });
 
-      // Add the team to the tournament's teams
-      await AgeDivision.findByIdAndUpdate(ageDivisionId, { $push: { teams: newTeam._id } });
+      await AgeDivision.updateOne({ age: ageDivisionId }, { $push: { teams: newTeam._id } });
 
-      // Find user with updated tournaments
       const userData = await User.findOne({ _id: userId }).populate('tournaments');
 
       return userData.tournaments;

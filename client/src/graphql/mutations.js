@@ -40,11 +40,23 @@ export const ADD_TOURNAMENT = gql`
   }
 `;
 
-export const REGISTER_TEAM = gql`
-  mutation registerTeam($teamName: String!, $teamMembers: [TeamMemberInput]!, $email: String!) {
-    registerTeam(teamName: $teamName, teamMembers: $teamMembers, email: $email) {
-      success
-      message
+export const REGISTER_FOR_TOURNAMENT = gql`
+  mutation RegisterForTournament($tournamentId: ID!, $teamData: TeamInput!, $ageDivisionId: ID!) {
+    registerForTournament(tournamentId: $tournamentId, teamData: $teamData, ageDivisionId: $ageDivisionId) {
+      _id
+      name
+      location
+      start
+      end
+      ageDivisions {
+        age
+        start
+        teamCap
+        end
+        teams {
+          name
+        }
+      }
     }
   }
 `;

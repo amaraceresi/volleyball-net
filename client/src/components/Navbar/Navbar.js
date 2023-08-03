@@ -17,9 +17,11 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-menu">
-        <Link to="/" className="navbar-item">
-          Home
-        </Link>
+        {!isAuthenticated && (
+          <Link to="/" className="navbar-item">
+            Home
+          </Link>
+        )}
         {isAuthenticated && (
           <React.Fragment>
             <Link to="/tournaments" className="navbar-item">

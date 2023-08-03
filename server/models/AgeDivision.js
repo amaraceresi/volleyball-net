@@ -10,7 +10,7 @@ const AgeDivisionSchema = new Schema({
     },
     start: {
         type: Date,
-        required: true,
+        required: false,
     },
     end: {
         type: Date,
@@ -25,10 +25,10 @@ const AgeDivisionSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Team'
     }],
-    tournament: {
+    tournaments: [{
         type: Schema.Types.ObjectId,
         ref: 'Tournament'
-    },
+    }],
 });
 
 const AgeDivision = mongoose.model('AgeDivision', AgeDivisionSchema);

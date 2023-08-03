@@ -1,0 +1,17 @@
+[
+  {
+      "age": "12",
+      "name": "Junior",
+      "teamCap": 8
+  },
+  {
+      "age": "14",
+      "name": "Mid Level",
+      "teamCap": 8
+  },
+  {
+      "age": "16",
+      "name": "Senior",
+      "teamCap": 8
+  }
+]
