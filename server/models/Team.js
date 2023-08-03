@@ -10,6 +10,14 @@ const TeamSchema = new Schema({
     type: String,
     trim: true,
   },
+  adminMemeber: {
+    type: String,
+    trim: true,
+  },
+  age: {
+    type: String,
+    required: true,
+  },
   players: [{
     type: String,
     trim: true,
