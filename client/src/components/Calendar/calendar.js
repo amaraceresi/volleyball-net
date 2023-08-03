@@ -11,12 +11,12 @@ const Calendar = () => {
   console.log(data);
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (error) return <p>Error</p>;
 
   const events = data.userTournaments.map(tournament => ({
     id: tournament._id,
     title: tournament.name,
-    date: tournament.start, // If 'start' is the correct property for the event's date.
+    start: tournament.start, 
   }));
 
   const handleEventClick = ({ event }) => {

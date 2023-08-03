@@ -10,7 +10,7 @@ const TournamentSchema = new Schema({
     type: String,
     trim: true,
   },
-  date: {
+  start: {
     type: Date,
     required: true,
   },

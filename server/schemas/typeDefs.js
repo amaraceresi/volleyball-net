@@ -22,7 +22,7 @@ const typeDefs = gql`
     _id: ID
     name: String
     location: String
-    date: Date
+    start: String
     ageDivisions: [AgeDivision]
   }
 
@@ -36,9 +36,12 @@ const typeDefs = gql`
   type AgeDivision {
     _id: ID
     age: String
+    start: Date
+    end: Date
     teamCap: Int!
     teams: [Team]
   }
+  
 
   input TeamInput {
     name: String!
