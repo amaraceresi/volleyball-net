@@ -31,3 +31,11 @@ export const ADD_USER = gql`
     }
   }
 `;
+
+export const ADD_TOURNAMENT = gql`
+  mutation createTournament($name: String!, $location: String!) {
+    addTournament(name: $name, location: $location) {
+      _id
+    }
+  }
+`;

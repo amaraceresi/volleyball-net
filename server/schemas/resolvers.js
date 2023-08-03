@@ -3,7 +3,7 @@ const Tournament = require('../models/Tournament');
 const Team = require('../models/Team');
 const AgeDivision = require('../models/AgeDivision');
 const { signToken } = require('../utils/auth');
-const { AuthenticationError } = require('apollo-server-express');
+const { AuthenticationError, UserInputError } = require('apollo-server-express');
 const { dateScalar } = require('./scalar');
 
 const resolvers = {
@@ -61,14 +61,20 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };  
     },
-    addTournament: async (parent, { name, location }) => {
-      return await Tournament.create({ name, location });
+    addTournament: async (parent, argsObj) => {
+      return await Tournament.create(argsObj);
     },
     addTeam: async (parent, { name, members }) => {
       return await Team.create({ name, members });
     },
-    addAgeDivision: async (parent, { age, start, teamCap, date, teams }) => {
-      return await AgeDivision.create({ age, start, teamCap, date, teams });
+    addAgeDivision: async (parent, { age, start, teamCap, end, tournamentId }) => {
+      const divisionData = await AgeDivision.create({ age, start, teamCap, end, });
+
+      await Tournament.findByIdAndUpdate(tournamentId, {
+        $push: { ageDivisions: divisionData._id } 
+      })
+
+      return divisionData;
     },
     addAgeDivisionToTournament: async (parent, { ageDivisionId, tournamentId }) => {
       const tournament = await Tournament.findById(tournamentId);
@@ -98,20 +104,33 @@ const resolvers = {
 
       return team;
     },
-    registerForTournament: async (parent, { userId, tournamentId, teamData }, context) => {
+    registerForTournament: async (parent, { ageDivisionId, tournamentId, teamData }, context) => {
       // Ensure user is logged in
       if (!context.user) {
         throw new AuthenticationError('User is not authenticated. You need to be logged in!');
       }
 
+      const userId = context.user._id;
+
+      const team = {
+        ...teamData,
+        adminMember: userId
+      }
+      
+      const { teamCap, teams } = await AgeDivision.findById(ageDivisionId)
+      
+      if(teams.length >= teamCap) {
+        throw UserInputError;
+      }
+
       // Create the team
-      const newTeam = await Team.create(teamData);
+      const newTeam = await Team.create(team);
 
       // Add the team to the user's teams
-      await User.findByIdAndUpdate(userId, { $push: { teams: newTeam._id } });
+      await User.findByIdAndUpdate(userId, { $push: { teams: newTeam._id, tournaments: tournamentId } });
 
       // Add the team to the tournament's teams
-      await Tournament.findByIdAndUpdate(tournamentId, { $push: { teams: newTeam._id } });
+      await AgeDivision.findByIdAndUpdate(ageDivisionId, { $push: { teams: newTeam._id } });
 
       // Find user with updated tournaments
       const userData = await User.findOne({ _id: userId }).populate('tournaments');
