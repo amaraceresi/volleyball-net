@@ -18,6 +18,10 @@ const TournamentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Team',
   }],
+  ageDivision: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Age Division'
+  }],
   users: [{
     type: Schema.Types.ObjectId,
     ref: 'User',

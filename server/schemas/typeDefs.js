@@ -7,6 +7,7 @@ const typeDefs = gql`
     _id: ID
     firstName: String
     lastName: String
+    password: String
     email: String
     tournaments: [Tournament]
     createdAt: Date
@@ -23,14 +24,19 @@ const typeDefs = gql`
     name: String
     location: String
     start: String
+    teams: String
+    users: String
     ageDivisions: [AgeDivision]
   }
 
   type Team {
     _id: ID
     name: String
-    members: [User]
+    adminMember: User
+    coach: User
     age: String
+    players: [String]
+    tournament: [Tournament]
   }
 
   type AgeDivision {
@@ -40,6 +46,7 @@ const typeDefs = gql`
     end: Date
     teamCap: Int!
     teams: [Team]
+    tournament: [Tournament]
   }
   
 
