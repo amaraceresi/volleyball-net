@@ -1,7 +1,7 @@
 const User = require('../models/User');
 const Tournament = require('../models/Tournament');
 const Team = require('../models/Team');
-const AgeDivision = require('../models/AgeDivison');
+const AgeDivision = require('../models/AgeDivision');
 const { signToken } = require('../utils/auth');
 const { AuthenticationError } = require('apollo-server-express');
 const { dateScalar } = require('./scalar');
