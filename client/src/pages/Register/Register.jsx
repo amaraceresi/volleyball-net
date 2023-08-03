@@ -62,7 +62,6 @@ function Register() {
           <input type="email" name="email" id="email" value={teamData.email} onChange={(e) => setTeamData({...teamData, email: e.target.value})} required />
         </div>
         <button onClick={() => navigate('/payment')}>Proceed to Payment</button>
-        <button type="submit">Register</button>
       </form>
     </div>
   );

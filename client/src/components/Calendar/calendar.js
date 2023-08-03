@@ -10,7 +10,7 @@ import Select from 'react-dropdown-select';
 const events = [
   {
     id: 1,
-    title: "Test Event 1",
+    title: "Summer Slam @ 9AM",
     start: "2023-08-05",
     end: "2023-08-05",
   },
