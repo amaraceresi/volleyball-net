@@ -1,12 +1,15 @@
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { GET_USER_TOURNAMENTS } from '../../graphql/queries';
+import { REGISTER_TEAM } from '../../graphql/mutations';
 
 function Register() {
   const { tournamentId, agedDivisionId } = useParams();
   const navigate = useNavigate();
-
+  
+  const [registerTeam] = useMutation(REGISTER_TEAM);
+  
   const [teamData, setTeamData] = useState({
     teamName: '',
     teamMembers: [{name: ''}, {name: ''}],
@@ -29,15 +32,18 @@ function Register() {
     const { loading, data } = useQuery(GET_USER_TOURNAMENTS);
 
     try {
-      // Make an API call here
-
-
+      await registerTeam({ 
+        variables: { 
+          teamName: teamData.teamName, 
+          teamMembers: teamData.teamMembers, 
+          email: teamData.email 
+        } 
+      });
+      
       navigate('/dashboard');
     } catch(err) {
       console.log(err)
     }
-
-
   };
 
   return (

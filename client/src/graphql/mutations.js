@@ -39,3 +39,12 @@ export const ADD_TOURNAMENT = gql`
     }
   }
 `;
+
+export const REGISTER_TEAM = gql`
+  mutation registerTeam($teamName: String!, $teamMembers: [TeamMemberInput]!, $email: String!) {
+    registerTeam(teamName: $teamName, teamMembers: $teamMembers, email: $email) {
+      success
+      message
+    }
+  }
+`;

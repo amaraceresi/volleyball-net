@@ -33,3 +33,4 @@ export const GET_USER_TOURNAMENTS = gql`
     }
   }
 `;
+
