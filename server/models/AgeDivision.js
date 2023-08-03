@@ -16,6 +16,11 @@ const AgeDivisionSchema = new Schema({
         type: Date,
         required: false,
     },
+    teamCap: {
+        type: Number,
+        required: true,
+        default: 8
+    },
     teams: [{
         type: Schema.Types.ObjectId,
         ref: 'Team'
