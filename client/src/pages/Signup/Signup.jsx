@@ -31,8 +31,8 @@ const headContent = (
 
 export default function SignUp() {
   
-  const [addUser, { error, data, loading }] = useMutation(ADD_USER);
-  const { isAuthenticated } = useSelector(getUser());
+  const [addUser, { error, loading }] = useMutation(ADD_USER);
+  const { isAuthenticated } = useSelector(getUser);
   
   const [formState, setFormState] = useState({
     firstName: "",
@@ -54,11 +54,29 @@ export default function SignUp() {
     event.preventDefault();
 
     try {
-      const { data } = await addUser({
+      const { data, errors } = await addUser({
         variables: { ...formState },
       });
 
-      AuthService.login(data.addUser.token);
+      if (errors) {
+        console.error('Mutation errors:', errors);
+        return;
+      }
+
+      console.log('Mutation response:', data);
+
+      if (!data || !data.addUser) {
+        console.error('No data returned from mutation');
+        return;
+      }
+
+      const { token, user } = data.addUser;
+      if (!token) {
+        console.error('No token returned from mutation');
+        return;
+      }
+
+      AuthService.login(token);
     } catch (e) {
       console.error(e);
     }

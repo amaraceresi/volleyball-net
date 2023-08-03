@@ -19,13 +19,9 @@ export const GET_USER_TOURNAMENTS = gql`
       _id
       name
       location
-      start
-      end
       ageDivisions {
         age
-        start
         teamCap
-        end
         teams {
           name
         }

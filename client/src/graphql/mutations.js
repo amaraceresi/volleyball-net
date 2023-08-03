@@ -11,6 +11,11 @@ export const LOGIN_USER = gql`
         email
         createdAt
         updatedAt
+        tournaments {
+          _id
+          name
+          location
+        }
       }
     }
   }
@@ -27,15 +32,23 @@ export const ADD_USER = gql`
         email
         createdAt
         updatedAt
+        tournaments {
+          _id
+          name
+          location
+        }
       }
     }
   }
 `;
 
 export const ADD_TOURNAMENT = gql`
-  mutation createTournament($name: String!, $location: String!) {
-    addTournament(name: $name, location: $location) {
+  mutation createTournament($name: String!, $location: String!, $date: Date!) {
+    addTournament(name: $name, location: $location, date: $date) {
       _id
+      name
+      location
+      date
     }
   }
 `;
@@ -46,13 +59,9 @@ export const REGISTER_FOR_TOURNAMENT = gql`
       _id
       name
       location
-      start
-      end
+      date
       ageDivisions {
         age
-        start
-        teamCap
-        end
         teams {
           name
         }

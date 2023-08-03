@@ -5,7 +5,6 @@ const typeDefs = gql`
 
   type User {
     _id: ID
-    team: [Team]
     firstName: String
     lastName: String
     email: String
@@ -23,28 +22,23 @@ const typeDefs = gql`
     _id: ID
     name: String
     location: String
-    start: Date
-    end: Date
+    date: Date
     ageDivisions: [AgeDivision]
   }
 
   type Team {
     _id: ID
     name: String
-    adminMember: User
-    members: [String]
+    members: [User]
     age: String
   }
 
   type AgeDivision {
     _id: ID
     age: String
-    start: Date
     teamCap: Int!
-    end: Date
     teams: [Team]
   }
-
 
   input TeamInput {
     name: String!
@@ -63,12 +57,12 @@ const typeDefs = gql`
   type Mutation {
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): AuthUser
     loginUser(email: String!, password: String!): AuthUser
-    addTournament(name: String!, location: String!): Tournament
+    addTournament(name: String!, location: String!, date: Date!): Tournament
     addTeam(name: String!, members: [String]!): Team
-    addMemberToTeam(teamId: ID!, userId: ID!): Team
-    addAgeDivision(age: String!, start: Date!, teamCap: Int!, end: Date!, tournamentId: ID!): AgeDivision
-    addAgeDivisionToTournament(ageDivisionId: ID!, tournamentId: ID!): Tournament
+    addAgeDivision(age: String!, teamCap: Int!, tournamentId: ID!): AgeDivision
     registerForTournament(tournamentId: ID!, teamData: TeamInput!, ageDivisionId: ID!): [Tournament]
+    addAgeDivisionToTournament(ageDivisionId: ID!, tournamentId: ID!): Tournament
+    addMemberToTeam(memberId: ID!, teamId: ID!): Team
   }
 `;
 
