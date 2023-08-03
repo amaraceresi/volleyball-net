@@ -1,5 +1,7 @@
+import { useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { GET_USER_TOURNAMENTS } from '../../graphql/queries';
 
 function Register() {
   const { tournamentId, agedDivisionId } = useParams();
@@ -21,11 +23,15 @@ function Register() {
     });
   };
 
-  const handleSubmit = (event) => {
+  const HandleSubmit = async (event) => {
     event.preventDefault();
 
+    const { loading, data } = useQuery(GET_USER_TOURNAMENTS);
+
     try {
-      // make api call
+      // Make an API call here
+
+
       navigate('/dashboard');
     } catch(err) {
       console.log(err)
@@ -39,7 +45,7 @@ function Register() {
       <h1>Register Your Team</h1>
       <p>Tournament ID: {tournamentId}</p>
       <p>Age Division ID: {agedDivisionId}</p>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={HandleSubmit}>
         <div>
           <label htmlFor="teamName">Team Name:</label>
           <input type="text" name="teamName" id="teamName" value={teamData.teamName} onChange={(e) => setTeamData({...teamData, teamName: e.target.value})} required />
