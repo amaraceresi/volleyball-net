@@ -38,7 +38,7 @@ function Register() {
           teamMembers: teamData.teamMembers, 
           email: teamData.email 
         } 
-      });
+      }); 
       
       navigate('/dashboard');
     } catch(err) {
