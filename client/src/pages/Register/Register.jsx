@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client';
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { GET_USER_TOURNAMENTS } from '../../graphql/queries';
+import { GET_TOURNAMENTS } from '../../graphql/queries';
 import { REGISTER_FOR_TOURNAMENT } from '../../graphql/mutations';
 
 function Register() {
@@ -14,14 +14,14 @@ function Register() {
     teamName: '',
     teamMembers: [{name: ''}, {name: ''}],
     email: '',
+    age: '',
   });
 
-  const { loading, data, error } = useQuery(GET_USER_TOURNAMENTS);
+  const { error } = useQuery(GET_TOURNAMENTS);
 
   useEffect(() => {
     if (error) {
       console.error(error);
-      // handle error
     }
   }, [error]);
 
@@ -38,7 +38,6 @@ function Register() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Ensure parameters exist
     if (!tournamentId || !ageDivisionId) {
       console.error('Tournament ID or Age Division ID is not provided.');
       return;
@@ -47,13 +46,13 @@ function Register() {
     try {
       await registerForTournament({ 
         variables: { 
-          age: parseInt(ageDivisionId), // or simply 'ageDivisionId' if it's already a number
-          tournamentId: tournamentId, // Assuming this is an ObjectId string
+          age: parseInt(ageDivisionId), 
+          tournamentId: tournamentId, 
           teamData: {
             name: teamData.teamName, 
             members: teamData.teamMembers.map(member => member.name)
           },
-          ageDivisionId: ageDivisionId // Assuming this is an ObjectId string
+          ageDivisionId: ageDivisionId 
         } 
       }); 
 

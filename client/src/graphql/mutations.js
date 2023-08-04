@@ -48,7 +48,7 @@ export const ADD_TOURNAMENT = gql`
       _id
       name
       location
-      date
+      start
     }
   }
 `;
@@ -59,7 +59,7 @@ export const REGISTER_FOR_TOURNAMENT = gql`
       _id
       name
       location
-      date
+      start
       ageDivisions {
         age
         teams {
