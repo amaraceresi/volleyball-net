@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -10,7 +10,9 @@ Modal.setAppElement('#root');
 
 const Calendar = () => {
   const { loading, error, data } = useQuery(GET_TOURNAMENTS);
-  const calendar = useRef(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [selectedDivision, setSelectedDivision] = useState("");
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
@@ -24,63 +26,59 @@ const Calendar = () => {
     },
   }));
 
-  const TournamentModal = () => {
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [selectedEvent, setSelectedEvent] = useState(null);
+  const handleEventClick = (info) => {
+    setSelectedEvent(info.event);
+    setModalIsOpen(true);
+  };
 
-    const closeModal = () => {
-      setModalIsOpen(false);
-    };
-
-    const openModal = (event) => {
-      setSelectedEvent(event);
-      setModalIsOpen(true);
-    };
-
-    useEffect(() => {
-      const handleEventClick = ({ event }) => {
-        openModal(event);
-      };
-      
-      calendar.current.getApi().on('eventClick', handleEventClick);
-      
-      return () => {
-        calendar.current.getApi().off('eventClick', handleEventClick);
-      };
-    }, []);
-
-    if (!selectedEvent) return null;
-
-    return (
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Tournament Details"
-      >
-        <h2>{selectedEvent.title}</h2>
-        {selectedEvent.extendedProps.ageDivisions.map((division) => (
-          <div key={division._id}>
-            <h3>{division.age}U Division</h3>
-            <button onClick={() => window.location.href=`/register/${selectedEvent.id}/${division._id}`}>Register for {division.age}U</button>
-          </div>
-        ))}
-        <button onClick={closeModal}>Close</button>
-      </Modal>
+  const handleRegister = () => {
+    const division = selectedEvent.extendedProps.ageDivisions.find(
+      (division) => division.age === selectedDivision
     );
+    window.location.href = `/register/${selectedEvent.id}/${division._id}`;
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
   };
 
   return (
     <div>
       <FullCalendar
-        ref={calendar}
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         selectable={true}
         editable={true}
         droppable={true}
         events={events}
+        eventClick={handleEventClick}
       />
-      <TournamentModal />
+
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Tournament Details"
+      >
+        {selectedEvent && (
+          <>
+            <h2>{selectedEvent.title}</h2>
+            <select
+              value={selectedDivision}
+              onChange={(e) => setSelectedDivision(e.target.value)}
+            >
+              {selectedEvent.extendedProps.ageDivisions.map((division) => (
+                <option key={division._id} value={division.age}>
+                  {division.age}U Division
+                </option>
+              ))}
+            </select>
+            <button onClick={handleRegister}>
+              Register for {selectedDivision}U
+            </button>
+          </>
+        )}
+        <button onClick={closeModal}>Close</button>
+      </Modal>
     </div>
   );
 };

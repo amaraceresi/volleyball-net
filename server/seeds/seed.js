@@ -18,13 +18,15 @@ db.once('open', async () => {
 
   for (let newTournament of tournaments) {
     // randomly assign an age division to a tournament
-    const currentAgeDivision = ageDivisions[Math.floor(Math.random() * ageDivisions.length)];
-    newTournament.ageDivisions.push(currentAgeDivision._id);
+    for (const currentAgeDivision of ageDivisions ) {
+      newTournament.ageDivisions.push(currentAgeDivision._id);
+      currentAgeDivision.tournaments.push(newTournament._id);
+      await currentAgeDivision.save();
+    }
+    
     await newTournament.save();
 
     // reference tournament on age division model, too
-    currentAgeDivision.tournaments.push(newTournament._id);
-    await currentAgeDivision.save();
   }
 
   console.log('all done!');
