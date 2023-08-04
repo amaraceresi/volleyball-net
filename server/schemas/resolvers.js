@@ -27,7 +27,7 @@ const resolvers = {
     },
     tournaments: async () => {
       try {
-        return await Tournament.find({});
+        return await Tournament.find({}).populate('ageDivisions');
       } catch (error) {
         console.error("Error in the tournaments resolver: ", error);
       }

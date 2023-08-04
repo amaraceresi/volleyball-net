@@ -32,3 +32,18 @@ export const GET_USER_TOURNAMENTS = gql`
   }
 `;
 
+export const GET_TOURNAMENTS = gql`query tournaments {
+  tournaments {
+    _id
+    name
+    location
+    start
+    ageDivisions {
+      _id
+      age
+      start
+      end
+      teamCap
+    }
+  }
+}`

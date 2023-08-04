@@ -3,17 +3,17 @@ import { useQuery } from '@apollo/client';
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { GET_USER_TOURNAMENTS } from '../../graphql/queries';
+import { GET_TOURNAMENTS } from '../../graphql/queries';
 
 const Calendar = () => {
-  const { loading, error, data } = useQuery(GET_USER_TOURNAMENTS);
+  const { loading, error, data } = useQuery(GET_TOURNAMENTS);
 
   console.log(data);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
 
-  const events = data.userTournaments.map(tournament => ({
+  const events = data.tournaments.map(tournament => ({
     id: tournament._id,
     title: tournament.name,
     start: tournament.start, 

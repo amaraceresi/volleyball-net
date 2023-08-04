@@ -24,8 +24,8 @@ const typeDefs = gql`
     name: String
     location: String
     start: String
-    teams: String
-    users: String
+    teams: [Team]
+    users: [User]
     ageDivisions: [AgeDivision]
   }
 
