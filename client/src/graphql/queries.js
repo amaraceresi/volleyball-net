@@ -22,15 +22,16 @@ export const GET_USER_TOURNAMENTS = gql`
       location
       ageDivisions {
         age
-        teamCap
         start
         teams {
           name
+          members
         }
       }
     }
   }
 `;
+
 
 export const GET_TOURNAMENTS = gql`query tournaments {
   tournaments {
@@ -43,7 +44,6 @@ export const GET_TOURNAMENTS = gql`query tournaments {
       age
       start
       end
-      teamCap
     }
   }
 }`

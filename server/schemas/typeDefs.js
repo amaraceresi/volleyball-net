@@ -35,7 +35,7 @@ const typeDefs = gql`
     adminMember: User
     coach: User
     age: String
-    players: [String]
+    members: [String]
     tournament: [Tournament]
   }
 
@@ -44,7 +44,7 @@ const typeDefs = gql`
     age: String
     start: Date
     end: Date
-    teamCap: Int!
+    teamCap: Int
     teams: [Team]
     tournament: [Tournament]
   }

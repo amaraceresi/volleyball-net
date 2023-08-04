@@ -9,6 +9,7 @@ const headContent = (
     <meta name="description" content="This is my personalized homepage." />
   </>
 );
+ 
 
 const DashboardContent = () => {
   const { loading, error, data } = useQuery(GET_USER_TOURNAMENTS);
@@ -19,29 +20,39 @@ const DashboardContent = () => {
     return <p>Error so sad</p>;
   }
 
-  return (
+
+  console.log(data);
+
+  
+return (
     <div>
       <h2>My Registered Tournaments</h2>
-      {data.userTournaments.map((tournament) => (
-        <div key={tournament._id}>
-          <h3>{tournament.name}</h3>
-          <p>Location: {tournament.location}</p>
-          <p>Start: {new Date(tournament.start).toLocaleDateString()}</p>
-          <p>End: {new Date(tournament.end).toLocaleDateString()}</p>
-          {tournament.ageDivisions.map((ageDivision, index) => (
-            <div key={index}>
-              <h4>Age Division: {ageDivision.age}</h4>
-              <p>Team Cap: {ageDivision.teamCap}</p>
-              {ageDivision.teams.map((team, i) => (
-                <p key={i}>Team: {team.name}</p>
-              ))}
-            </div>
-          ))}
-        </div>
-      ))}
+      {data.userTournaments.map((tournament) => {
+        const startDate = tournament.start ? new Date(parseInt(tournament.start)).toLocaleDateString() : "Not provided";
+
+        return (
+          <div key={tournament._id}>
+            <h3>{tournament.name} - {startDate}</h3>
+            {tournament.ageDivisions && tournament.ageDivisions.map((ageDivision, index) => (
+              <div key={index}>
+                <h4>Age Division: {ageDivision.age}</h4>
+                {ageDivision.teams && ageDivision.teams.map((team, i) => (
+                  <div key={i}>
+                    <p>{team.name} vs TBD</p>
+                    <p>
+                      Team Members: {team.members.join(", ")}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        );
+      })}
     </div>
   );
-};
+}; 
+
 
 const Dashboard = () => {
   return (

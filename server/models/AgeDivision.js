@@ -18,7 +18,7 @@ const AgeDivisionSchema = new Schema({
     },
     teamCap: {
         type: Number,
-        required: true,
+        required: false,
         default: 8
     },
     teams: [{

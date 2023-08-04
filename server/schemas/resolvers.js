@@ -9,7 +9,6 @@ const { dateScalar } = require('./scalar');
 const resolvers = {
   Date: dateScalar,
 
-
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
@@ -27,14 +26,31 @@ const resolvers = {
     },
     tournaments: async () => {
       try {
-        return await Tournament.find({}).populate('ageDivisions');
+        const tournaments = await Tournament.find({}).populate('ageDivisions');
+
+        tournaments.forEach(tournament => {
+          if (isNaN(Date.parse(tournament.start))) {
+            tournament.start = null;
+          }
+          if (isNaN(Date.parse(tournament.end))) {
+            tournament.end = null;
+          }
+        });
+
+        return tournaments;
       } catch (error) {
         console.error("Error in the tournaments resolver: ", error);
       }
     },
     teams: async () => {
       try {
-        return await Team.find({});
+        const teams = await Team.find({});
+        teams.forEach(team => {
+          if (!Array.isArray(team.members)) {
+            team.members = [];
+          }
+        });
+        return teams;
       } catch (error) {
         console.error("Error in the teams resolver: ", error);
       }
@@ -50,7 +66,27 @@ const resolvers = {
       if (context.user) {
         try {
           const userData = await User.findOne({ _id: context.user._id })
-            .populate('tournaments');
+            .populate({
+              path: 'tournaments',
+              populate: {
+                path: 'ageDivisions',
+                model: 'AgeDivision',
+                populate: {
+                  path: 'teams',
+                  model: 'Team'
+                }
+              }
+            });
+
+          userData.tournaments.forEach(tournament => {
+            if (isNaN(Date.parse(tournament.start))) {
+              tournament.start = null;
+            }
+            if (isNaN(Date.parse(tournament.end))) {
+              tournament.end = null;
+            }
+          });
+
           return userData.tournaments;
         } catch (error) {
           console.error("Error in the userTournaments resolver: ", error);
@@ -69,7 +105,6 @@ const resolvers = {
       } catch (error) {
         console.error("Error in the addUser mutation: ", error);
         throw new Error(`Error in addUser mutation: ${error.message}`);
-
       }
     },
     loginUser: async (parent, { email, password }) => {
@@ -154,39 +189,7 @@ const resolvers = {
         console.error("Error in the addMemberToTeam mutation: ", error);
       }
     },
-    registerForTournament: async (parent, { ageDivisionId, tournamentId, teamData }, context) => {
-      if (!context.user) {
-        throw new AuthenticationError('User is not authenticated. You need to be logged in!');
-      }
-
-      try {
-        const userId = context.user._id;
-
-        const team = {
-          ...teamData,
-          adminMember: userId
-        }
-
-        const ageDivision = await AgeDivision.findById(ageDivisionId);
-
-        if (ageDivision.teams.length >= ageDivision.teamCap) {
-          throw new UserInputError("The maximum number of teams for this age division has been reached.");
-        }
-
-        const newTeam = await Team.create(team);
-
-        await User.findByIdAndUpdate(userId, { $push: { teams: newTeam._id, tournaments: tournamentId } });
-
-        await AgeDivision.updateOne({ age: ageDivisionId }, { $push: { teams: newTeam._id } });
-
-        const userData = await User.findOne({ _id: userId }).populate('tournaments');
-
-        return userData.tournaments;
-      } catch (error) {
-        console.error("Error in the registerForTournament mutation: ", error);
-      }
-    },
-  },
+  }
 };
 
 module.exports = resolvers;

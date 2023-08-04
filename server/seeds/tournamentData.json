@@ -1,14 +1,18 @@
 [
   {
-    "name": "Tournament 1",
-    "start": "2023-08-01"
+    "name": "Summer Slam",
+    "start": "2023-08-05"
   },
   {
-    "name": "Tournament 2",
-    "start": "2023-08-02"
+    "name": "Scout Out",
+    "start": "2023-08-11"
   },
   {
-    "name": "Tournament 3",
-    "start": "2023-08-03"
+    "name": "Monday Night Mashup",
+    "start": "2023-08-14"
+  },
+  {
+    "name": "Freedom Fest",
+    "start": "2023-08-20"
   }
 ]
