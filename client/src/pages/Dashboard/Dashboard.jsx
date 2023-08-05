@@ -2,14 +2,13 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_USER_TOURNAMENTS } from '../../graphql/queries';
 import Page from '../../components/Page';
-
 const headContent = ( 
   <>
     <title>Dashboard</title>
     <meta name="description" content="This is my personalized homepage." />
   </>
 );
- 
+
 
 const DashboardContent = () => {
   const { loading, error, data } = useQuery(GET_USER_TOURNAMENTS);
@@ -20,11 +19,7 @@ const DashboardContent = () => {
     return <p>Error so sad</p>;
   }
 
-
-  console.log(data);
-
-  
-return (
+  return (
     <div>
       <h2>My Registered Tournaments</h2>
       {data.userTournaments.map((tournament) => {
@@ -54,6 +49,7 @@ return (
 }; 
 
 
+
 const Dashboard = () => {
   return (
     <Page isProtected={true} headContent={headContent}>
@@ -61,5 +57,4 @@ const Dashboard = () => {
     </Page>
   );
 };
-
 export default Dashboard;

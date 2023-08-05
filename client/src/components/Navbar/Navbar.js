@@ -17,11 +17,17 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-menu">
-        {!isAuthenticated && (
+      {!isAuthenticated && (
+        <>
           <Link to="/" className="navbar-item">
             Home
           </Link>
-        )}
+          <Link to="/contact" className="navbar-item">
+            Contact
+          </Link>
+        </>
+      )}
+
         {isAuthenticated && (
           <React.Fragment>
             <Link to="/tournaments" className="navbar-item">
@@ -29,6 +35,9 @@ function Navbar() {
             </Link>
             <Link to="/dashboard" className="navbar-item">
               Dashboard
+            </Link>
+            <Link to="/contact" className="navbar-item">
+            Contact
             </Link>
             <button onClick={handleLogout} className="navbar-item">
               Logout

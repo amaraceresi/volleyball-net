@@ -65,6 +65,30 @@ const resolvers = {
     userTournaments: async (parent, args, context) => {
       if (context.user) {
         try {
+          const userData = await User.findOne({ _id: context.user._id })
+          .populate({
+            path: 'tournaments',
+            populate: {
+              path: 'ageDivisions',
+              model: 'AgeDivision',
+              populate: {
+                path: 'teams',
+                model: 'Team'
+              }
+            }
+          });
+
+        userData.tournaments.forEach(tournament => {
+          if (isNaN(Date.parse(tournament.start))) {
+            tournament.start = null;
+          }
+          if (isNaN(Date.parse(tournament.end))) {
+            tournament.end = null;
+          }
+        });
+
+
+
           // const ageDivisionData = Team.find({ adminMember: context.user._id })
           //   .populate([
           //     {
@@ -79,18 +103,18 @@ const resolvers = {
           //   ])
 
 
-          const userData = await User.findOne({ _id: context.user._id }, {raw: true})
-            .populate({
-              path: 'tournaments',
-              populate: {
-                path: 'ageDivisions',
-                model: 'AgeDivision',
-                populate: {
-                  path: 'teams',
-                  model: 'Team'
-                }
-              }
-            });
+          // const userData = await User.findOne({ _id: context.user._id }, {raw: true})
+          //   .populate({
+          //     path: 'tournaments',
+          //     populate: {
+          //       path: 'ageDivisions',
+          //       model: 'AgeDivision',
+          //       populate: {
+          //         path: 'teams',
+          //         model: 'Team'
+          //       }
+          //     }
+          //   });
 
 
           return userData.tournaments;
