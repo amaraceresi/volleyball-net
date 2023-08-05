@@ -33,7 +33,7 @@ const HomePage = () => {
   return (
     <Page isProtected={false} headContent={headContent}>
       <div>
-        <h1>Welcome to Our Volleyball Website!</h1>
+        <h1>Highpoint Grove LLC-Beach at Highpoint</h1>
         <div className="container">
           <Link to="/login" className="linkStyle">
             <button className="buttonStyle">Login</button>
@@ -42,6 +42,7 @@ const HomePage = () => {
             <button className="buttonStyle">Sign Up</button>
           </Link>
         </div>
+        
         <div style={{ height: '50vh', width: '100%' }}>
           <GoogleMapReact
             bootstrapURLKeys={{ key: 'YOUR_GOOGLE_MAPS_API_KEY' }} 
@@ -56,8 +57,10 @@ const HomePage = () => {
           </GoogleMapReact>
         </div>
       </div>
+    
     </Page>
   );
 };
 
 export default HomePage;
+

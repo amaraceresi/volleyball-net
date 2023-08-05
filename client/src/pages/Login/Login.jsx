@@ -58,34 +58,38 @@ export default function Login() {
 
   return (
     <Page isProtected={false} headContent={headContent}>
-      <div className="container">
-        <form onSubmit={handleFormSubmit}>
-          <input
-            placeholder="Email"
-            name="email"
-            type="email"
-            value={formState.email}
-            onChange={handleChange}
-          />
-          <input
-            placeholder="Password"
-            name="password"
-            type="password"
-            value={formState.password}
-            onChange={handleChange}
-          />
-          {loading ? (
-            <button type="submit" disabled={true}>
-              Loading...
-            </button>
-          ) : (
-            <button type="submit">
-              Submit
-            </button>
-          )}
-        </form>
-        {error && <div className="error">{error.message}</div>}
+      <div className="login-container">
+        <div className="container">
+          <div className="title">Login</div>
+          <form className="form" onSubmit={handleFormSubmit}>
+            <input
+              placeholder="Email"
+              name="email"
+              type="email"
+              value={formState.email}
+              onChange={handleChange}
+            />
+            <input
+              placeholder="Password"
+              name="password"
+              type="password"
+              value={formState.password}
+              onChange={handleChange}
+            />
+            {loading ? (
+              <button type="submit" disabled={true} className="submitBtn">
+                Loading...
+              </button>
+            ) : (
+              <button type="submit" className="submitBtn">
+                Submit
+              </button>
+            )}
+          </form>
+          {error && <div className="error">{error.message}</div>}
+        </div>
       </div>
     </Page>
   );
 }
+

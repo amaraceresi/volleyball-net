@@ -1,13 +1,20 @@
 body {
   background-color: #f9f9f9;
   font-family: Arial, sans-serif;
+  margin: 0; 
 }
 
-.container {
+.login-container .container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: 50vh;
+  justify-content: center;
+  /* margin-top: -10px; */
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
 form {
@@ -50,3 +57,4 @@ form button:hover:not(:disabled) {
   color: red;
   font-size: 0.9rem;
 }
+
