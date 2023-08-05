@@ -29,12 +29,14 @@ const Calendar = () => {
   const handleEventClick = (info) => {
     setSelectedEvent(info.event);
     setModalIsOpen(true);
+    setSelectedDivision(info.event.extendedProps.ageDivisions[0].age)
   };
 
   const handleRegister = () => {
     const division = selectedEvent.extendedProps.ageDivisions.find(
       (division) => division.age === selectedDivision
     );
+
     window.location.href = `/register/${selectedEvent.id}/${division._id}`;
   };
 
@@ -44,6 +46,8 @@ const Calendar = () => {
 
   return (
     <div>
+
+
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
