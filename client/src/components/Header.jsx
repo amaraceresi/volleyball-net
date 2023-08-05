@@ -2,6 +2,16 @@ import { Link } from "react-router-dom";
 import AuthServices from "../utils/auth";
 import { useSelector } from "react-redux";
 import { getUser } from "../redux/slices/userSlice";
+import React from "react";
+
+const Header = ({ style }) => {
+  return (
+    <header style={style}> {}
+      {/* Your header content */}
+    </header>
+  );
+};
+
 
 const styles = {
   container: {
@@ -27,7 +37,7 @@ const styles = {
   },
 };
 
-export default function Header() {
+export default function () {
   const { isAuthenticated } = useSelector(getUser());
 
   const handleLogout = (e) => {
@@ -37,7 +47,10 @@ export default function Header() {
   return (
     <nav style={styles.container}>
       <Link to={"/"} style={styles.undecoratedLink}>
-        <h1>Project-3 Starter Code</h1>
+      <h1 style={{ backgroundColor: "red", padding: "20px", width: "2000px", height: "20px", marginTop: "55px", }}>
+          Highpoint Grove LLC-Beach at Highpoint
+        </h1>
+
       </Link>
       <div style={styles.buttonDiv}>
         {isAuthenticated && (

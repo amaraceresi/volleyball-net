@@ -34,6 +34,7 @@ const HomePage = () => {
           </Link>
         </div>
       </div>
+    
     </Page>
   );
 };

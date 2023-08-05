@@ -15,6 +15,11 @@ const styles = {
     paddingTop: "80px",
     flexGrow: "1",
   },
+
+header: {
+  background: "#333", 
+  color: "#fff",      
+  },
 };
 
 const defaultHeadContent = (
@@ -38,12 +43,12 @@ export default function Page({
   return (
     <>
       <Helmet>{headContent}</Helmet>
-      {/* <Header /> */}
+      <Header />
       <div style={styles.container}>
         <main style={styles.main}>
           {isProtected && !isAuthenticated ? <div>Unauthorized</div> : children}
         </main>
-        {/* <Footer /> */}
+        <Footer />
       </div>
     </>
   );
