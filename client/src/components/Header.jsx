@@ -37,7 +37,7 @@ export default function Header() {
   return (
     <nav style={styles.container}>
       <Link to={"/"} style={styles.undecoratedLink}>
-        <h1>Project-3 Starter Code</h1>
+        <h1>Volleyball-Net</h1>
       </Link>
       <div style={styles.buttonDiv}>
         {isAuthenticated && (
