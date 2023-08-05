@@ -10,13 +10,13 @@ const TeamSchema = new Schema({
     type: String,
     trim: true,
   },
-  adminMemeber: {
-    type: String,
-    trim: true,
+  adminMember: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   },
   age: {
     type: String,
-    required: true,
+    required: false,
   },
   members: [{
     type: String,

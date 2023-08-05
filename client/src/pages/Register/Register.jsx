@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { GET_TOURNAMENTS } from '../../graphql/queries';
 import { REGISTER_FOR_TOURNAMENT } from '../../graphql/mutations';
+import './Register.css';
+
 
 function Register() {
   const { tournamentId, ageDivisionId } = useParams();

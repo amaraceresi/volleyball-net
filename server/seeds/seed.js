@@ -20,7 +20,7 @@ db.once('open', async () => {
     // randomly assign an age division to a tournament
     for (const currentAgeDivision of ageDivisions ) {
       newTournament.ageDivisions.push(currentAgeDivision._id);
-      currentAgeDivision.tournaments.push(newTournament._id);
+      currentAgeDivision.tournament = newTournament._id;
       await currentAgeDivision.save();
     }
     

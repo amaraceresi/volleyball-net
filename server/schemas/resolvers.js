@@ -65,7 +65,21 @@ const resolvers = {
     userTournaments: async (parent, args, context) => {
       if (context.user) {
         try {
-          const userData = await User.findOne({ _id: context.user._id })
+          // const ageDivisionData = Team.find({ adminMember: context.user._id })
+          //   .populate([
+          //     {
+          //       path: 'members'
+          //     },
+          //     {
+          //       path: 'tournaments',
+          //       poplate: {
+          //         path: 'ageDivision'
+          //       }
+          //     }
+          //   ])
+
+
+          const userData = await User.findOne({ _id: context.user._id }, {raw: true})
             .populate({
               path: 'tournaments',
               populate: {
@@ -78,14 +92,6 @@ const resolvers = {
               }
             });
 
-          userData.tournaments.forEach(tournament => {
-            if (isNaN(Date.parse(tournament.start))) {
-              tournament.start = null;
-            }
-            if (isNaN(Date.parse(tournament.end))) {
-              tournament.end = null;
-            }
-          });
 
           return userData.tournaments;
         } catch (error) {
@@ -187,6 +193,41 @@ const resolvers = {
         return team;
       } catch (error) {
         console.error("Error in the addMemberToTeam mutation: ", error);
+      }
+    },
+    registerForTournament: async (parent, { ageDivisionId, tournamentId, teamData }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError('User is not authenticated. You need to be logged in!');
+      }
+
+      console.log(teamData);
+
+      try {
+        const userId = context.user._id;
+
+        const team = {
+          ...teamData,
+          adminMember: userId,
+          tournaments: [tournamentId]
+        }
+
+        const ageDivision = await AgeDivision.findById(ageDivisionId);
+
+        if (ageDivision.teams.length >= ageDivision.teamCap) {
+          throw new UserInputError("The maximum number of teams for this age division has been reached.");
+        }
+
+        const newTeam = await Team.create(team);
+
+        await User.findByIdAndUpdate(userId, { $push: { teams: newTeam._id, tournaments: tournamentId } });
+
+        await AgeDivision.updateOne({ _id: ageDivisionId }, { $push: { teams: newTeam._id } });
+
+        const userData = await User.findOne({ _id: userId }).populate('tournaments');
+
+        return userData.tournaments;
+      } catch (error) {
+        console.error("Error in the registerForTournament mutation: ", error);
       }
     },
   }

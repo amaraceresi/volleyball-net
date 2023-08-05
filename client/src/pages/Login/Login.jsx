@@ -8,16 +8,7 @@ import { Navigate } from "react-router-dom";
 import Page from "../../components/Page";
 import AuthService from "../../utils/auth";
 
-const styles = {
-  form: {
-    display: "flex",
-    flexDirection: "Column",
-    width: "300px",
-  },
-  submitBtn: {
-    cursor: "pointer",
-  },
-};
+import "./Login.css";
 
 const headContent = (
   <>
@@ -67,33 +58,34 @@ export default function Login() {
 
   return (
     <Page isProtected={false} headContent={headContent}>
-      <div>Login</div>
-      <form style={styles.form} onSubmit={handleFormSubmit}>
-        <input
-          placeholder="Email"
-          name="email"
-          type="email"
-          value={formState.email}
-          onChange={handleChange}
-        />
-        <input
-          placeholder="Password"
-          name="password"
-          type="password"
-          value={formState.password}
-          onChange={handleChange}
-        />
-        {loading ? (
-          <button type="submit" disabled={true} style={styles.submitBtn}>
-            Loading...
-          </button>
-        ) : (
-          <button type="submit" style={styles.submitBtn}>
-            Submit
-          </button>
-        )}
-      </form>
-      {error && <h3>{error.message}</h3>}
+      <div className="container">
+        <form onSubmit={handleFormSubmit}>
+          <input
+            placeholder="Email"
+            name="email"
+            type="email"
+            value={formState.email}
+            onChange={handleChange}
+          />
+          <input
+            placeholder="Password"
+            name="password"
+            type="password"
+            value={formState.password}
+            onChange={handleChange}
+          />
+          {loading ? (
+            <button type="submit" disabled={true}>
+              Loading...
+            </button>
+          ) : (
+            <button type="submit">
+              Submit
+            </button>
+          )}
+        </form>
+        {error && <div className="error">{error.message}</div>}
+      </div>
     </Page>
   );
 }

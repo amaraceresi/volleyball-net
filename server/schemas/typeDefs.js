@@ -46,7 +46,7 @@ const typeDefs = gql`
     end: Date
     teamCap: Int
     teams: [Team]
-    tournament: [Tournament]
+    tournament: Tournament
   }
   
 
