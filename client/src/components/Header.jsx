@@ -48,9 +48,13 @@ export default function () {
   return (
     <nav style={styles.container}>
       <Link to={"/"} style={styles.undecoratedLink}>
-      <h1 style={{ backgroundColor: "red", padding: "30px",flexGrow: 1,  width: "2000px", height: "20px", marginTop: "55px", }}>
-          Highpoint Grove LLC-Beach at Highpoint
-        </h1>
+// <<<<<<< volley-map
+// //       <h1 style={{ backgroundColor: "red", padding: "30px",flexGrow: 1,  width: "2000px", height: "20px", marginTop: "55px", }}>
+// //           Highpoint Grove LLC-Beach at Highpoint
+// //         </h1>
+// // =======
+// //         <h1>Volleyball-Net</h1>
+// >>>>>>> main
       </Link>
       <div style={styles.buttonDiv}>
         {isAuthenticated && (

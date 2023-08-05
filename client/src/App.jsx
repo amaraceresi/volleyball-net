@@ -14,7 +14,12 @@ import Payment from "./pages/Payment/Payment";
 import Register from "./pages/Register/Register";
 import Navbar from "./components/Navbar/Navbar";
 import Contact from "./pages/Contact/Contact";
-import { HelmetProvider } from 'react-helmet-async';
+import { HelmetProvider } from 'react-helmet-async'
+// import 'bootstrap/dist/css/bootstrap.min.css';
+
+// import 'materialize-css/dist/css/materialize.min.css';
+// import 'materialize-css/dist/js/materialize.min.js';
+
 
 const httpLink = createHttpLink({
   uri: "/graphql",

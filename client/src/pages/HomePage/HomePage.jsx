@@ -33,7 +33,7 @@ const HomePage = () => {
   return (
     <Page isProtected={false} headContent={headContent}>
       <div>
-        <h1>Welcome to Our Volleyball Website!</h1>
+        <h1>Highpoint Grove LLC-Beach at Highpoint</h1>
         <div className="container">
           <Link to="/login" className="linkStyle">
             <button className="buttonStyle">Login</button>
