@@ -42,6 +42,7 @@ const HomePage = () => {
             <button className="buttonStyle">Sign Up</button>
           </Link>
         </div>
+        
         <div style={{ height: '50vh', width: '100%' }}>
           <GoogleMapReact
             bootstrapURLKeys={{ key: 'YOUR_GOOGLE_MAPS_API_KEY' }} 

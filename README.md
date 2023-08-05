@@ -4,7 +4,6 @@ Group 5 Project 3 proposal
 Beverly Long
 Jackson Smith
 Amara Ceresi
-Grant Ellington
 Stephanie Ferguson
 
 We are creating an app for a beach volleyball venue to offer online registration.

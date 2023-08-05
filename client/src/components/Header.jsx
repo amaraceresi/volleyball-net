@@ -22,6 +22,7 @@ const styles = {
     position: "fixed",
     top: "0",
     width: "100%",
+    zIndex: "1000",
   },
   buttonDiv: {
     display: "flex",
@@ -47,10 +48,9 @@ export default function () {
   return (
     <nav style={styles.container}>
       <Link to={"/"} style={styles.undecoratedLink}>
-      <h1 style={{ backgroundColor: "red", padding: "20px", width: "2000px", height: "20px", marginTop: "55px", }}>
+      <h1 style={{ backgroundColor: "red", padding: "30px",flexGrow: 1,  width: "2000px", height: "20px", marginTop: "55px", }}>
           Highpoint Grove LLC-Beach at Highpoint
         </h1>
-
       </Link>
       <div style={styles.buttonDiv}>
         {isAuthenticated && (

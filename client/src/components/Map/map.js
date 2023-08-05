@@ -5,7 +5,7 @@ const loader = new Loader({
 });
 
 loader.load().then(async () => {
-    const position = { lat: -34.397, lng: 15.644 };
+    const position = { lat: 37.097871, lng: -86.251422 };
     const { Map } = await google.maps.importLibrary("maps");
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
     
