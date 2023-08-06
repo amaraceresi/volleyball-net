@@ -12,12 +12,15 @@ import Signup from "./pages/Signup/Signup";
 import Tournaments from "./pages/Tournaments/Tournaments";
 import Payment from "./pages/Payment/Payment";
 import Register from "./pages/Register/Register";
+import Footer from "./components/Footer/Footer";
 import Navbar from "./components/Navbar/Navbar";
 import Banner from "./components/Banner";
 import Contact from "./pages/Contact/Contact";
 import Location from "./pages/Location/Location";
 import About from "./pages/About/About";
 import { HelmetProvider } from 'react-helmet-async';
+import 'materialize-css/dist/css/materialize.min.css';
+import 'materialize-css/dist/js/materialize.min.js';
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -40,7 +43,6 @@ const client = new ApolloClient({
 
 function BannerWrapper() {
   const location = useLocation(); 
-
   return location.pathname === '/' ? <Banner /> : null;
 }
 
@@ -65,6 +67,7 @@ function App() {
                 <Route path="/register/:tournamentId/:ageDivisionId" element={<Register />} />
                 <Route path="/payment" element={<Payment />} />
               </Routes>
+              <Footer /> {/* Footer component rendered here */}
             </Router>
           </Auth>
         </Provider>
