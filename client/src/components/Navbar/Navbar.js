@@ -25,6 +25,12 @@ function Navbar() {
           <Link to="/contact" className="navbar-item">
             Contact
           </Link>
+          <Link to="/location" className="navbar-item">
+            Location
+          </Link>
+          <Link to="/about" className="navbar-item">
+            About
+          </Link>
         </>
       )}
 
@@ -38,6 +44,12 @@ function Navbar() {
             </Link>
             <Link to="/contact" className="navbar-item">
             Contact
+            </Link>
+            <Link to="/location" className="navbar-item">
+            Contact
+            </Link>
+            <Link to="/about" className="navbar-item">
+            About
             </Link>
             <button onClick={handleLogout} className="navbar-item">
               Logout

@@ -1,24 +1,27 @@
 .navbar {
   background-color: #282c34;
-  padding: 10px 0;
+  width: 100%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
+  align-items: center;
 }
 
 .navbar-menu {
   display: flex;
-  gap: 15px;
+  justify-content: center;
+  align-items: center;
 }
 
 .navbar-item {
   color: #ffffff;
   text-decoration: none;
   font-size: 20px;
-  background: none; 
-  border: none; 
-  padding: 0; 
-  cursor: pointer; 
-  outline: inherit; 
+  margin: 0 1in; /* Adjust the spacing */
+  padding: 10px; /* For better hover effect */
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: inherit;
 }
 
 .navbar-item:hover {

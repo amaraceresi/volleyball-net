@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { getUser } from "../redux/slices/userSlice";
 
 const styles = {
+  
   container: {
     display: "flex",
     flexDirection: "row",

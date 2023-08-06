@@ -1,7 +1,7 @@
 import React from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom"; 
 import { Provider } from 'react-redux';
 import { store } from "./redux/store";
 import Auth from './components/Auth';
@@ -13,8 +13,11 @@ import Tournaments from "./pages/Tournaments/Tournaments";
 import Payment from "./pages/Payment/Payment";
 import Register from "./pages/Register/Register";
 import Navbar from "./components/Navbar/Navbar";
+import Banner from "./components/Banner";
 import Contact from "./pages/Contact/Contact";
-import { HelmetProvider } from 'react-helmet-async'
+import Location from "./pages/Location/Location";
+import About from "./pages/About/About";
+import { HelmetProvider } from 'react-helmet-async';
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -35,6 +38,12 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+function BannerWrapper() {
+  const location = useLocation(); 
+
+  return location.pathname === '/' ? <Banner /> : null;
+}
+
 function App() {
   return (
     <ApolloProvider client={client}>
@@ -42,6 +51,7 @@ function App() {
         <Provider store={store}>
           <Auth>
             <Router>
+              <BannerWrapper /> 
               <Navbar />
               <Routes>
                 <Route path="/" element={<HomePage />} />
@@ -50,6 +60,8 @@ function App() {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/tournaments" element={<Tournaments />} />
+                <Route path="/location" element={<Location />} />
+                <Route path="/about" element={<About />} />
                 <Route path="/register/:tournamentId/:ageDivisionId" element={<Register />} />
                 <Route path="/payment" element={<Payment />} />
               </Routes>
