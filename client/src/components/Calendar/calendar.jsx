@@ -5,6 +5,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import Modal from 'react-modal';
 import { GET_TOURNAMENTS } from '../../graphql/queries';
+import './calendar.css'; 
 
 Modal.setAppElement('#root');
 
@@ -12,7 +13,6 @@ const Calendar = () => {
   const { loading, error, data } = useQuery(GET_TOURNAMENTS);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [selectedDivision, setSelectedDivision] = useState("");
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
@@ -29,15 +29,10 @@ const Calendar = () => {
   const handleEventClick = (info) => {
     setSelectedEvent(info.event);
     setModalIsOpen(true);
-    setSelectedDivision(info.event.extendedProps.ageDivisions[0].age)
   };
 
-  const handleRegister = () => {
-    const division = selectedEvent.extendedProps.ageDivisions.find(
-      (division) => division.age === selectedDivision
-    );
-
-    window.location.href = `/register/${selectedEvent.id}/${division._id}`;
+  const handleRegister = (divisionId, eventId) => {
+    window.location.href = `/register/${eventId}/${divisionId}`;
   };
 
   const closeModal = () => {
@@ -46,8 +41,6 @@ const Calendar = () => {
 
   return (
     <div>
-
-
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
@@ -57,28 +50,23 @@ const Calendar = () => {
         events={events}
         eventClick={handleEventClick}
       />
-
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
+        className="custom-modal" 
         contentLabel="Tournament Details"
       >
         {selectedEvent && (
           <>
             <h2>{selectedEvent.title}</h2>
-            <select
-              value={selectedDivision}
-              onChange={(e) => setSelectedDivision(e.target.value)}
-            >
-              {selectedEvent.extendedProps.ageDivisions.map((division) => (
-                <option key={division._id} value={division.age}>
-                  {division.age}U Division
-                </option>
-              ))}
-            </select>
-            <button onClick={handleRegister}>
-              Register for {selectedDivision}U
-            </button>
+            {selectedEvent.extendedProps.ageDivisions.map((division) => (
+              <div key={division._id} className="custom-division-container">
+                <span>{division.age}U Division</span>
+                <button onClick={() => handleRegister(division._id, selectedEvent.id)}>
+                  Register
+                </button>
+              </div>
+            ))}
           </>
         )}
         <button onClick={closeModal}>Close</button>

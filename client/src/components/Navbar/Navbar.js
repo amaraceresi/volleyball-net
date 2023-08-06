@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logOut } from "../../redux/slices/userSlice";
 import AuthService from "../../utils/auth";
-import './Navbar.css';
+import M from 'materialize-css';
+import logo from '../../images/volley2.png';
 
 function Navbar() {
   const { isAuthenticated } = useSelector((state) => state.user); 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const elems = document.querySelectorAll('.sidenav');
+    M.Sidenav.init(elems);
+  }, []);
 
   const handleLogout = () => {
     AuthService.logout();
@@ -15,59 +21,39 @@ function Navbar() {
   };
 
   return (
-    <nav className="navbar">
-      <div className="navbar-menu">
-      {!isAuthenticated && (
-        <>
-          <Link to="/" className="navbar-item">
-            Home
+    <>
+      <nav class="indigo darken-4">
+        <div className="nav-wrapper custom-navbar">
+        <Link to="/" className="brand-logo">
+            {/* <img src={logo} alt="Volley" style={{ height: '50px', verticalAlign: 'middle' }} /> */}
           </Link>
-          <Link to="/contact" className="navbar-item">
-            Contact
-          </Link>
-          <Link to="/location" className="navbar-item">
-            Location
-          </Link>
-          <Link to="/about" className="navbar-item">
-            About
-          </Link>
-        </>
-      )}
+          <a href="#" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
+          <ul className="right hide-on-med-and-down">
+            {!isAuthenticated && <li><Link to="/">Home</Link></li>}
+            <li><Link to="/contact">Contact</Link></li>
+            <li><Link to="/location">Location</Link></li>
+            <li><Link to="/about">About</Link></li>
+            {isAuthenticated && <li><Link to="/tournaments">Tournaments</Link></li>}
+            {isAuthenticated && <li><Link to="/dashboard">Dashboard</Link></li>}
+            {isAuthenticated && <li><button onClick={handleLogout}>Logout</button></li>}
+            {!isAuthenticated && <li><Link to="/login">Login</Link></li>}
+            {!isAuthenticated && <li><Link to="/signup">Signup</Link></li>}
+          </ul>
+        </div>
+      </nav>
 
-        {isAuthenticated && (
-          <React.Fragment>
-            <Link to="/tournaments" className="navbar-item">
-              Tournaments
-            </Link>
-            <Link to="/dashboard" className="navbar-item">
-              Dashboard
-            </Link>
-            <Link to="/contact" className="navbar-item">
-            Contact
-            </Link>
-            <Link to="/location" className="navbar-item">
-            Contact
-            </Link>
-            <Link to="/about" className="navbar-item">
-            About
-            </Link>
-            <button onClick={handleLogout} className="navbar-item">
-              Logout
-            </button>
-          </React.Fragment>
-        )}
-        {!isAuthenticated && (
-          <React.Fragment>
-            <Link to="/login" className="navbar-item">
-              Login
-            </Link>
-            <Link to="/signup" className="navbar-item">
-              Signup
-            </Link>
-          </React.Fragment>
-        )}
-      </div>
-    </nav>
+      <ul className="sidenav" id="mobile-demo">
+        {!isAuthenticated && <li><Link to="/">Home</Link></li>}
+        <li><Link to="/contact">Contact</Link></li>
+        <li><Link to="/location">Location</Link></li>
+        <li><Link to="/about">About</Link></li>
+        {isAuthenticated && <li><Link to="/tournaments">Tournaments</Link></li>}
+        {isAuthenticated && <li><Link to="/dashboard">Dashboard</Link></li>}
+        {isAuthenticated && <li><button onClick={handleLogout}>Logout</button></li>}
+        {!isAuthenticated && <li><Link to="/login">Login</Link></li>}
+        {!isAuthenticated && <li><Link to="/signup">Signup</Link></li>}
+      </ul>
+    </>
   );
 }
 
