@@ -20,7 +20,7 @@ const TournamentSchema = new Schema({
   }],
   ageDivision: [{
     type: Schema.Types.ObjectId,
-    ref: 'Age Division'
+    ref: 'AgeDivision'
   }],
   users: [{
     type: Schema.Types.ObjectId,

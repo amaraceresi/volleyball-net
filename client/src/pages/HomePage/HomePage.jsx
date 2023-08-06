@@ -12,10 +12,10 @@ import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import insta from '../../images/insta.jpg';
 import insta2 from '../../images/insta2.jpg';
-import court from '../../images/court.jpg';
+import court2 from '../../images/court2.jpeg';
 
 const ImageSlideshow = () => {
-  const images = [insta, insta2, court];
+  const images = [insta, insta2, court2];
   return (
     <Carousel>
       {images.map((image, index) => (

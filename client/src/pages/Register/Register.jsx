@@ -103,10 +103,10 @@ function Register() {
           {teamData.teamMembers.map((x, i) => {
             return (
               <div key={i}>
-                <label htmlFor="name">Team Member {i+1}</label>
+                <label htmlFor="name">Team Member {i+1}:</label>
                 <input
                   name="name"
-                  placeholder="Enter team member's name"
+                  placeholder=""
                   value={x.name}
                   onChange={e => handleInputChange(e, i)}
                   required
@@ -114,10 +114,6 @@ function Register() {
               </div>
             );
           })}
-          <div>
-            <label htmlFor="email">Email:</label>
-            <input type="email" name="email" id="email" value={teamData.email} onChange={(e) => setTeamData({...teamData, email: e.target.value})} required />
-          </div>
           <button type="submit">Register</button>
         </form>
       </div>

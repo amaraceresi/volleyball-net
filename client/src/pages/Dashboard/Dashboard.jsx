@@ -19,10 +19,12 @@ const DashboardContent = () => {
     return <p>Error so sad</p>;
   }
 
+  const userTournaments = data?.userTournaments || [];
+
   return (
     <div>
       <h2>My Registered Tournaments</h2>
-      {data.userTournaments.map((tournament) => {
+      {userTournaments.map((tournament) => {
         const startDate = tournament.start ? new Date(parseInt(tournament.start)).toLocaleDateString() : "Not provided";
 
         return (
@@ -46,7 +48,8 @@ const DashboardContent = () => {
       })}
     </div>
   );
-}; 
+};
+
 
 
 
