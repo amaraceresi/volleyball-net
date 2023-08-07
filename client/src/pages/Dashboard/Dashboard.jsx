@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_USER_TOURNAMENTS } from '../../graphql/queries';
 import Page from '../../components/Page';
+import { useSelector } from 'react-redux';
+import { getUser } from '../../redux/slices/userSlice';
 const headContent = ( 
   <>
     <title>Dashboard</title>
@@ -10,16 +12,55 @@ const headContent = (
 );
 
 
+const findAndReturnAgeDivisions = (ageDivisions, userId) => {
+  // console.log(ageDivisions);
+  return ageDivisions.filter((division) => {
+    for (const team of division.teams) {
+      if (team.adminMember._id === userId) return true;
+    };
+
+    return false;
+  });
+};
+
+const findOnlyUserTournamentsWithUserInAgeDivision = (userTournaments, userId) => {
+  const tournaments = [];
+
+  for (const tournament of userTournaments) {
+    const ageDivisionsWithUser = findAndReturnAgeDivisions(tournament.ageDivisions, userId);
+
+    if (ageDivisionsWithUser.length < 1) continue;
+    const updatedTournament = {
+      ...tournament,
+      ageDivisions: ageDivisionsWithUser
+    };
+
+    tournaments.push(updatedTournament);
+  };
+
+  return tournaments;
+};
+
+
 const DashboardContent = () => {
   const { loading, error, data } = useQuery(GET_USER_TOURNAMENTS);
+  const { userData } = useSelector(getUser());
+  console.log(userData);
+  const [userTournaments, setUserTournaments] = useState([]);
+
+  useEffect(() => {
+    if(!data) return;
+    console.log('data', data);
+    const filteredTournaments = findOnlyUserTournamentsWithUserInAgeDivision(data.userTournaments, userData._id)
+    console.log('filter', filteredTournaments)
+    setUserTournaments(filteredTournaments);
+  }, [data])
 
   if (loading) return <p>Loading...</p>;
   if (error) {
     console.error(error);
     return <p>Error so sad</p>;
   }
-
-  const userTournaments = data?.userTournaments || [];
 
   return (
     <div>

@@ -26,6 +26,9 @@ export const GET_USER_TOURNAMENTS = gql`
         teams {
           name
           members
+          adminMember {
+            _id
+          }
         }
       }
     }

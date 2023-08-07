@@ -191,11 +191,65 @@ const resolvers = {
         throw new Error('Failed to add age division to the tournament.');
       }
     },
-  }
+    addMemberToTeam: async (parent, { teamId, userId }) => {
+      try {
+        const team = await Team.findById(teamId);
+        const user = await User.findById(userId);
+    
+        if (!team || !user) {
+          throw new Error('Invalid team or user ID');
+        }
+    
+        team.members.push(user._id);
+    
+        await team.save();
+    
+        return team;
+      } catch (error) {
+        console.error("Error in the addMemberToTeam mutation: ", error);
+      }
+    },
+    registerForTournament: async (parent, { ageDivisionId, tournamentId, teamData }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError('User is not authenticated. You need to be logged in!');
+      }
+    
+      console.log(teamData);
+    
+      try {
+        const userId = context.user._id;
+    
+        const team = {
+          ...teamData,
+          adminMember: userId,
+          tournaments: [tournamentId]
+        }
+    
+        const ageDivision = await AgeDivision.findById(ageDivisionId);
+    
+        if (ageDivision.teams.length >= ageDivision.teamCap) {
+          throw new UserInputError("The maximum number of teams for this age division has been reached.");
+        }
+    
+        const newTeam = await Team.create(team);
+    
+        await User.findByIdAndUpdate(userId, { $push: { teams: newTeam._id, tournaments: tournamentId } });
+    
+        await AgeDivision.updateOne({ _id: ageDivisionId }, { $push: { teams: newTeam._id } });
+    
+        const userData = await User.findOne({ _id: userId }).populate('tournaments');
+    
+        return userData.tournaments;
+      } catch (error) {
+        console.error("Error in the registerForTournament mutation: ", error);
+        throw new Error('Failed to add age division to the tournament.');
+      }
+    },
+  },
 };
 
-module.exports = resolvers;
 
+module.exports = resolvers;
           // const ageDivisionData = Team.find({ adminMember: context.user._id })
           //   .populate([
           //     {
