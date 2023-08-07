@@ -7,8 +7,8 @@ import './Location.css';
 
 const headContent = (
   <>
-    <title>Home</title>
-    <meta name="description" content="This is Volleyball Net's homepage." />
+    <title>Location</title>
+    <meta name="description" content="location" />
   </>
 );
 

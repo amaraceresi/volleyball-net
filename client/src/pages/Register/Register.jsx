@@ -1,9 +1,12 @@
 import { useMutation, useQuery } from '@apollo/client';
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { loadStripe } from "@stripe/stripe-js";
 import { GET_TOURNAMENTS } from '../../graphql/queries';
 import { REGISTER_FOR_TOURNAMENT } from '../../graphql/mutations';
 import './Register.css';
+
+const stripePromise = loadStripe('pk_test_51Nbr2wJk5OMPdC4gVsTRFv8N2NZRJCfidY0mYUSLBYxG1MeEeXMGLUrgzUV3eqE11iwil2LdqwKT1CLqiZtNjVjN00ij2Pu8oF');
 
 function Register() {
   const { tournamentId, ageDivisionId } = useParams();
@@ -89,6 +92,21 @@ function Register() {
     }
   };
 
+  const handlePayment = async () => {
+    const stripe = await stripePromise;
+
+    const { error } = await stripe.redirectToCheckout({
+      lineItems: [{ price: 'price_1NbrP8Jk5OMPdC4gg82iG8bz', quantity: 1 }],
+      mode: 'payment',
+      successUrl: `${window.location.origin}/register?success=true`,
+      cancelUrl: `${window.location.origin}/register?canceled=true`,
+    });
+
+    if (error) {
+      console.warn('Error:', error);
+    }
+  };
+
   return (
     <div className="register-container">
       <div className="container">
@@ -116,6 +134,10 @@ function Register() {
           })}
           <button type="submit">Register</button>
         </form>
+        <div>
+          <p>Registration Fee: $40</p>
+          <button onClick={handlePayment}>Proceed to Payment</button>
+        </div>
       </div>
     </div>
   );

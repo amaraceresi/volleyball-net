@@ -59,14 +59,14 @@ const Calendar = () => {
         {selectedEvent && (
           <>
             <h2>{selectedEvent.title}</h2>
-            {selectedEvent.extendedProps.ageDivisions.map((division) => (
-              <div key={division._id} className="custom-division-container">
-                <span>{division.age}U Division</span>
-                <button onClick={() => handleRegister(division._id, selectedEvent.id)}>
-                  Register
-                </button>
-              </div>
-            ))}
+            <select onChange={(e) => handleRegister(e.target.value, selectedEvent.id)}>
+              <option value="">Select a division</option>
+              {selectedEvent.extendedProps.ageDivisions.map((division) => (
+                <option key={division._id} value={division._id}>
+                  {division.age}U Register
+                </option>
+              ))}
+            </select>
           </>
         )}
         <button onClick={closeModal}>Close</button>

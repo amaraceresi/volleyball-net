@@ -82,7 +82,7 @@ export default function Login() {
               </button>
             ) : (
               <button type="submit" className="submitBtn">
-                Submit
+                Login
               </button>
             )}
           </form>

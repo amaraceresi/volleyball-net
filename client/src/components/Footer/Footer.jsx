@@ -1,44 +1,48 @@
-// import React from 'react';
-// import './Footer.css';
-
-// const Footer = () => {
-//   return (
-//     <footer className="page-footer indigo darken-4">
-//       <div className="container">
-//         <div className="row">
-//           <div className="col l6 s12">
-//             <h5 className="white-text">Footer Content</h5>
-//             <p className="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
-//           </div>
-//           <div className="col l4 offset-l2 s12">
-//             <h5 className="white-text">Links</h5>
-//             <ul>
-//               <li><a className="grey-text text-lighten-3" href="/">Home</a></li>
-//               <li><a className="grey-text text-lighten-3" href="/contact">Contact</a></li>
-//               <li><a className="grey-text text-lighten-3" href="/location">Location</a></li>
-//               <li><a className="grey-text text-lighten-3" href="/about">About</a></li>
-//             </ul>
-//           </div>
-//         </div>
-//       </div>
-//       <div className="footer-copyright">
-//         <div className="container2">
-//           © 2014 Copyright Text
-//           <a className="grey-text text-lighten-4 right" href="#!">More Links</a>
-//         </div>
-//       </div>
-//     </footer>
-//   );
-// };
-
-// export default Footer;
-
 import React from 'react';
+import { Container, Typography, Box, Grid } from '@mui/material';
+import { Facebook, Twitter, LinkedIn, Instagram } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
-const Footer = () => (
-  <footer style={{ background: '#f0f0f0', padding: '10px', textAlign: 'center' }}>
-    <p>&copy; {new Date().getFullYear()} Your Company Name</p>
-  </footer>
-);
+const Footer = () => {
+  return (
+    <Box sx={{ backgroundColor: '#42A5F5', p: { xs: 3, sm: 6 }, pb: 1, color: 'white' }}> {/* Reduce padding-bottom here */}
+      <Container maxWidth="lg">
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={4}></Grid>
+          <Grid item xs={12} sm={4} style={{ textAlign: 'center' }}>
+            <Facebook fontSize="small" /> <Twitter fontSize="small" /> <LinkedIn fontSize="small" /> <Instagram fontSize="small" />
+          </Grid>
+          <Grid item xs={12} sm={4} style={{ textAlign: 'right' }}>
+            <Link to="/contact" style={{ color: 'inherit', textDecoration: 'none' }}>
+              Contact
+            </Link>
+            <br />
+            <Link to="/about" style={{ color: 'inherit', textDecoration: 'none' }}>
+              About
+            </Link>
+            <br />
+            <Link to="/location" style={{ color: 'inherit', textDecoration: 'none' }}>
+              Location
+            </Link>
+          </Grid>
+        </Grid>
+        <Box mt={4} textAlign="center">
+          <Typography variant="body2" gutterBottom>
+            © 2023 HIGHPOINT GROVE BEACH VOLLEYBALL
+          </Typography>
+        </Box>
+        <Typography variant="caption" align="left" mt={1}>
+          <Link to="/terms-of-service" style={{ color: 'inherit', textDecoration: 'none', fontSize: '0.7rem' }}>
+            Terms of Service
+          </Link>
+          {' | '}
+          <Link to="/privacy-policy" style={{ color: 'inherit', textDecoration: 'none', fontSize: '0.7rem' }}>
+            Privacy Policy
+          </Link>
+        </Typography>
+      </Container>
+    </Box>
+  );
+};
 
 export default Footer;

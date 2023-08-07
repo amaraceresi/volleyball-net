@@ -28,15 +28,15 @@ function Navbar() {
   };
 
   const links = [
-    !isAuthenticated && { to: '/', text: 'Home' },
-    { to: '/contact', text: 'Contact' },
-    { to: '/location', text: 'Location' },
-    { to: '/about', text: 'About' },
-    isAuthenticated && { to: '/tournaments', text: 'Tournaments' },
-    isAuthenticated && { to: '/dashboard', text: 'Dashboard' },
-    isAuthenticated && { onClick: handleLogout, text: 'Logout' },
-    !isAuthenticated && { to: '/login', text: 'Login' },
-    !isAuthenticated && { to: '/signup', text: 'Signup' }
+    !isAuthenticated && { to: '/', text: 'HOME' },
+    { to: '/contact', text: 'CONTACT' },
+    { to: '/location', text: 'LOCATION' },
+    { to: '/about', text: 'ABOUT' },
+    isAuthenticated && { to: '/tournaments', text: 'TOURNAMENTS' },
+    isAuthenticated && { to: '/dashboard', text: 'DASHBOARD' },
+    isAuthenticated && { onClick: handleLogout, text: 'LOGOUT' },
+    !isAuthenticated && { to: '/login', text: 'LOGIN' },
+    !isAuthenticated && { to: '/signup', text: 'SIGNUP' }
   ].filter(Boolean);
 
   return (

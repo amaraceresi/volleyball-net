@@ -67,11 +67,9 @@ function BulletinBoard() {
     <Paper elevation={3} sx={{ padding: 2 }}>
       <Typography variant="h6">Upcoming News:</Typography>
       <List>
-        <ListItem>News Item 1</ListItem>
+        <ListItem>Due to unexpected weather conditions, today's beach volleyball practice has been cancelled. Stay safe and see you at the next scheduled practice!</ListItem>
         <Divider />
-        <ListItem>News Item 2</ListItem>
-        <Divider />
-        <ListItem>News Item 3</ListItem>
+        <ListItem>Register for Summer Slam closing 8/8</ListItem>
       </List>
     </Paper>
   );
