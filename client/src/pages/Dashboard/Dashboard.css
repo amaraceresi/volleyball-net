@@ -1,0 +1,21 @@
+.dashboard-container {
+  border: 2px solid #333;  
+  padding: 20px;           
+  border-radius: 8px;      
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);  
+  background-color: #fff;
+  margin: 20px auto;
+  max-width: 800px;   
+}
+
+.tournament {
+  margin-bottom: 20px;
+}
+
+.age-division {
+  margin-top: 10px;
+}
+
+.red {
+  background-color: red;
+}
