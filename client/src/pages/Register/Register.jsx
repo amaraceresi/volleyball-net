@@ -5,6 +5,8 @@ import { loadStripe } from "@stripe/stripe-js";
 import { GET_TOURNAMENTS } from '../../graphql/queries';
 import { REGISTER_FOR_TOURNAMENT } from '../../graphql/mutations';
 import './Register.css';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const stripePromise = loadStripe('pk_test_51Nbr2wJk5OMPdC4gVsTRFv8N2NZRJCfidY0mYUSLBYxG1MeEeXMGLUrgzUV3eqE11iwil2LdqwKT1CLqiZtNjVjN00ij2Pu8oF');
 
@@ -56,6 +58,7 @@ function Register() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    handlePayment()
 
     if (!tournamentId || !ageDivisionId) {
       console.error('Tournament ID or Age Division ID is not provided.');
@@ -63,7 +66,15 @@ function Register() {
     }
 
     if (teamData.teamMembers.length < 2 || teamData.teamMembers[0].name === '' || teamData.teamMembers[1].name === '') {
-      alert('You need to have at least two team members.');
+      toast('You need to have at least two team members.', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
 
@@ -80,7 +91,16 @@ function Register() {
         }
       });
 
-      alert("Registration successful!");
+  
+      toast("Registration successful!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       setTeamData({
         teamName: '',
         teamMembers: [{name: ''}, {name: ''}],
@@ -98,9 +118,10 @@ function Register() {
     const { error } = await stripe.redirectToCheckout({
       lineItems: [{ price: 'price_1NbrP8Jk5OMPdC4gg82iG8bz', quantity: 1 }],
       mode: 'payment',
-      successUrl: `${window.location.origin}/register?success=true`,
-      cancelUrl: `${window.location.origin}/register?canceled=true`,
+      successUrl: `${window.location.origin}/dashboard`,
+      cancelUrl: `${window.location.origin}/register`,
     });
+ 
 
     if (error) {
       console.warn('Error:', error);
@@ -111,7 +132,7 @@ function Register() {
     <div className="register-container">
       <div className="container">
         <h1 className="title">Register Your Team</h1>
-        <p>Tournament ID: {tournamentName}</p>
+        <p>Tournament: {tournamentName}</p>
         <p>Age Division ID: {ageDivision}</p>
         <form onSubmit={handleSubmit}>
           <div>
@@ -134,10 +155,7 @@ function Register() {
           })}
           <button type="submit">Register</button>
         </form>
-        <div>
-          <p>Registration Fee: $40</p>
-          <button onClick={handlePayment}>Proceed to Payment</button>
-        </div>
+
       </div>
     </div>
   );
