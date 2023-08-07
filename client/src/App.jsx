@@ -21,8 +21,8 @@ import Contact from "./pages/Contact/Contact";
 import Location from "./pages/Location/Location";
 import About from "./pages/About/About";
 import { HelmetProvider } from 'react-helmet-async';
-import 'materialize-css/dist/css/materialize.min.css';
-import 'materialize-css/dist/js/materialize.min.js';
+// import 'materialize-css/dist/css/materialize.min.css';
+// import 'materialize-css/dist/js/materialize.min.js';
 
 const httpLink = createHttpLink({ uri: "/graphql" });
 
